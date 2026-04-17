@@ -1,0 +1,116 @@
+@import 'styles.css';
+
+
+/*===============================
+        Light-Dark Mode Toggle
+  ===============================*/
+
+#theme-switch {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+
+#theme-switch svg {
+  fill: var(--text-strong);
+}
+
+#theme-switch svg:first-child{
+  display: none;
+}
+
+.darkmode #theme-switch svg:last-child {
+  display: none;
+}
+
+.darkmode #theme-switch svg:first-child{
+  display: block;
+}
+
+
+/*===============================
+              Logo
+===============================*/
+
+#main-logo-link {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+#main-logo-link img:first-child{
+  display: none;
+}
+
+.darkmode #main-logo-link img:last-child {
+  display: none;
+}
+
+.darkmode #main-logo-link img:first-child{
+  display: block;
+}
+
+
+
+/*===============================
+               Navbar
+  ===============================*/
+
+#navbar {
+  position: relative;
+  background-color: var(--bg);
+  background: var(--gradient);
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-strong);
+}
+
+.navbar-layout {
+  max-width: var(--site-width);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem .5rem;
+  font: var(--h3);
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+/*===============================
+               Links
+  ===============================*/
+
+.navbar-links {
+  padding: 0 3rem;
+  flex-grow: 1;
+  text-align: left;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--text-strong);
+}
+
+.text-link:hover {
+  text-shadow: var(--shadow);
+}

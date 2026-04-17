@@ -1,0 +1,72 @@
+@import 'styles.css';
+
+
+/*===============================
+               Info
+  ===============================*/
+
+#footer {
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer-layout {
+  max-width: var(--site-width);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: .5rem .5rem;
+}
+
+.text-list {
+  line-height: .5rem;
+  background: var(--gradient);
+}
+
+
+/*===============================
+        social media icons
+  ===============================*/
+
+.socials {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto;
+  gap: 20px;
+}
+
+.fa {
+  width: 100%;
+  padding: 12px 0;
+  color: white;
+}
+
+.fa:hover {
+  opacity: 0.8;
+  transition: var(--transition);
+  color: white;
+}
+
+.fa-facebook {
+    color: white;
+    background-color: #3B5998;
+    background: linear-gradient(45deg, hsl(221, 44%, 46%), #3B5998);
+}
+
+.fa-instagram {
+    color: white;
+    background-color: #f40083;
+    background: linear-gradient(45deg, hsl(328, 100%, 53%), #f40083);
+}
+
+.fa-youtube {
+    color: white;
+    background-color: #bb0000;
+    background: linear-gradient(45deg, hsl(0, 100%, 42%), #bb0000);
+}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/carousel.css' %}" >
+{% endblock %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="carousel">
+
+    <div class="card-container">
+
+        <div class="card-carousel">
+
+            <span class="center card-image">
+                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
+            </span>
+
+            <div class="card-text">
+                <h1>E.S.U.V. Messed Up</h1>
+                <p style="font: var(--p1);">
+                    We are Messed Up. The floorball association from the University Twente.<br>
+                    Next to trainings we play in multiple competitions, join fun tournaments and organize amazing activities.<br>
+                    <br>
+                    Interested in trying floorball out? Send us an <a href="mailto:info@messedup.utwente.nl">e-mail</a> or just stop by one of our trainings!<br>
+                </p>
+            </div>
+
+            <div class="card-button">
+                <div class="center-scale">
+                    <span class="scale button">
+                        <a href="association" class="moody" target="_self">Learn more</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-carousel">
+            <span class="center card-image">
+                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
+            </span>
+
+            <div class="card-text">
+                <h1>About Floorball</h1>
+                <p style="font: var(--p1);">
+                    Floorball is one of the fasted indoor sports in the world. 
+                    We play year-round with always some members enthusiastic to play a game.<br>
+                    <br>
+                    So, have you always enjoyed indoor hockey more than field hockey? Or would you like something new? Check out our training times and drop by!
+                </p>
+            </div>
+
+            <div class="card-button">
+                <div class="center-scale">
+                    <span class="scale button">
+                        <a href="floorball" class="moody" target="_self">Learn more</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-carousel">
+            <span class="center card-image">
+                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
+            </span>
+            <div class="card-text">
+                <h1>Members</h1>
+                <p style="font: var(--p1);">
+                    Hier kan een highlight voor de eerst komende activiteit komen ofzo. Wordt misschien wat moeilijk, maar wel heel vet!
+                </p>
+            </div>
+
+            <div class="card-button">
+                <div class="center-scale">
+                    <span class="scale button">
+                        <a href="accounts/members" class="moody" target="_self">Learn more</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="sep-line"></div>
+
+<p>Hier kan nog meer geyap. Geen idee waar je allemaal over zou willen praten.</p>
+
+<script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+{% endblock %}

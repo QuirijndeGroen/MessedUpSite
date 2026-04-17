@@ -1,0 +1,10 @@
+{
+    "docwriter.progress.trackFunctions": true,
+    "docwriter.style": "Auto-detect",
+    "docwriter.progress.trackClasses": true,
+    "cSpell.words": [
+        "postgres",
+        "PYTHONUNBUFFERED",
+        "runserver"
+    ]
+}

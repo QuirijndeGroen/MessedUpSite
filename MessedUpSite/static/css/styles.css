@@ -1,0 +1,220 @@
+/* Colors & fonts variables */
+/* You just have to look at the Actual code */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+:root {
+    /* Background */
+    --bg-dark: hsl(0, 0%, 85%);
+    --bg: hsl(0, 0%, 88%);
+    --bg-light: hsl(0, 0%, 90%);
+    --gradient: linear-gradient(45deg, var(--bg-light), var(--bg));
+    --gradient-hover: linear-gradient(45deg, var(--bg-light) 97%, var(--bg));
+    /* Text */
+    --text-strong: rgba(0, 0, 0, 0.87);
+    --text-mid: rgba(0, 0, 0, 0.6);
+    --text-light: rgba(0, 0, 0, 0.38);
+    /* Borders */
+    --highlight: oklch(1 0 142);
+    --border: oklch(0.72 0 142);
+    --border-muted: oklch(0.82 0 142);
+    --border-card: solid 1px var(--border-muted);
+    /* Actions */
+    --primary: #30b530;
+    --secondary: #d065de;
+    /* Alerts */
+    --danger: oklch(0.5 0.05 30);
+    --warning: oklch(0.5 0.05 100);
+    --success: oklch(0.5 0.05 160);
+    --info: oklch(0.5 0.05 260);
+    /* Shadows */
+    --shadow: 0px 4px 4px #00000015, 0px 12px 12px #00000005;;
+    /* Type */
+    --ff: "Montserrat", sans-serif;
+    --h1: bold 54px/60px var(--ff);
+    --h2: bold 36px/48px var(--ff);
+    --h3: bold 24px/36px var(--ff);
+    --h4: bold 18px/30px var(--ff);
+
+    --links: 18px/18px var(--ff);
+    
+    --p: 16px/28px var(--ff);
+    --p1: 18px/28px var(--ff);
+    --p2: 36px/48px var(--ff);
+    --subtext: 12px/20px var(--ff);
+
+    --transition: 0.3s ease-in-out;
+
+    --sep-line: solid 1px var(--border-muted);
+
+    --transparent02: rgba(11, 11, 11, 0.2);
+    --transparent03: rgba(11, 11, 11, 0.3);
+    --transparent05: rgba(11, 11, 11, 0.5);
+
+    --site-width: 1200px
+}
+
+.darkmode {
+    /* Background */
+    --bg-dark: hsl(0, 0%, 12%);
+    --bg: hsl(0, 0%, 16%);
+    --bg-light: hsl(0, 0%, 18%);
+    --gradient: linear-gradient(45deg, var(--bg-light), var(--bg));
+    --gradient-hover: linear-gradient(45deg, var(--bg-light) 97%, var(--bg));
+    --gray: hsl(0, 0%, 60%);
+    /* Text */
+    --text-strong: rgba(255, 255, 255, 0.87);
+    --text-mid: rgba(255, 255, 255, 0.6);
+    --text-light: rgba(255, 255, 255, 0.38);
+    /* Borders */
+    --highlight: oklch(0.5 0 142);
+    --border: oklch(0.4 0 142);
+    --border-muted: oklch(0.3 0 142);
+    --border-card: solid 1px var(--border-muted);
+    /* Alerts */
+    --danger: oklch(0.7 0.05 30);
+    --warning: oklch(0.7 0.05 100);
+    --success: oklch(0.7 0.05 160);
+    --info: oklch(0.7 0.05 260);
+
+    --sep-line: solid 1px var(--border-muted);
+
+    --transparent02: rgba(242, 242, 242, 0.2);
+    --transparent03: rgba(242, 242, 242, 0.3);
+    --transparent05: rgba(242, 242, 242, 0.5);
+}
+
+
+body {
+  color:var(--text-mid);
+  background-color:var(--bg-dark);
+  font: var(--p);
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+a, a:visited, a:focus, a:hover, a:active {
+  text-decoration: none;
+  color:var(--text-mid);
+  cursor: pointer;
+}
+
+p {
+  color: var(--text-mid);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-strong);
+}
+
+/* Justify */
+.center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.right{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.content-container {
+  max-width: var(--site-width);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/*===============================
+               buttons
+  ===============================*/
+
+/* Repeating code */
+.button > *{
+  cursor: pointer;
+  text-decoration: none;
+  font: var(--h4);
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  transition: var(--transition);
+  background: none;
+}
+.button > *:hover{
+  transition: var(--transition);
+}
+
+.center-scale {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.scale:hover {
+  scale: 1.05;
+  transition: var(--transition);
+}
+
+/* moody */
+.moody{
+  border: solid 3px var(--primary);
+}
+.moody:hover {
+  box-shadow: var(--shadow);
+}
+
+.moody-fill{
+  background: var(--primary);
+}
+.moody-fill:hover {
+  box-shadow: var(--shadow);
+}
+
+
+/*===============================
+               Cards
+  ===============================*/
+
+.cards{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.card{
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  flex: 1;
+  min-width: 150px;
+}
+
+
+/*===============================
+               Lines
+  ===============================*/
+
+.sep-line{
+  max-width: var(--site-width);
+  width: 100%;
+  border: var(--sep-line);
+}
+
+
+

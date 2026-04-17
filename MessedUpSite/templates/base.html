@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messed Up | {% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static "assets/Images/Logo Light.png" %}" type="image/svg+xml">
+  
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% include "navbar.html" %}
+
+    <main>
+        <div class="content-container">
+        {% block content %}
+
+        {% endblock %}
+        </div>
+        <div class="sep-line"></div>
+    </main>
+    
+    {% include "footer.html" %}
+</body>
+
+</html> 

@@ -1,0 +1,13 @@
+@import 'styles.css';
+
+/* ==================================
+            Login Page
+================================== */
+
+#login-page {
+  margin: 50px;
+}
+
+.card {
+  background: var(--gradient);
+}

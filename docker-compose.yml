@@ -1,0 +1,41 @@
+x-services-volumes: &services-volumes
+  - ./:/app/:rw,cached
+
+x-database-variables: &database-variables
+  POSTGRES_DB: messed_up_postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
+x-app-variables: &app-variables
+  <<: *database-variables
+  POSTGRES_HOST: postgres
+
+services:
+  website:
+    image: messed-up-website:latest 
+    command: python manage.py runserver 0.0.0.0:9000
+    volumes: *services-volumes
+    environment: *app-variables
+    depends_on:
+      - db_migrate
+    ports:
+      - "9000:9000"
+
+  db_migrate:
+    image: messed-up-website:latest 
+    command: python manage.py migrate
+    volumes: *services-volumes
+    environment: *app-variables
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment: *database-variables
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  
+volumes:
+  db-data:

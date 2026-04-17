@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Members Page{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static "css/carousel.css" %}">
+    <link rel="stylesheet" href="{% static "css/members.css" %}">
+{% endblock %}
+
+{% block content %}
+<h1 style="padding:0;margin:0;">Upcoming:</h1>
+<div class="carousel-container">
+    <div class="center">
+        <h1>Activities</h1>
+        <div class="carousel">
+            <div class="card-container">
+                <div class="card-carousel">
+                    <span class="center card-image">
+                        <img src="{% static "assets/Images/kickin.png" %}" alt="Messed Up logo" style="width: auto; height: auto;">
+                    </span>
+
+                    <div class="card-text">
+                        <h2>Kick-In</h2>
+                        <p>
+                            We gaan hier natuurlijk weer knallen!
+                        </p>
+                    </div>
+
+                    <div class="button-info">
+                        <p class="activity-info">
+                            Location: Enschede <br>
+                            Date: 20/08/2026 <br>
+                            Time: All Day
+                        </p>
+                        <div class="card-button">
+                            <div class="center-scale">
+                                <span class="scale button">
+                                    <a href="association" class="moody" target="_self">Learn more</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-carousel">
+                    <span class="center card-image">
+                        <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
+                    </span>
+
+
+                    <div class="card-text">
+                        <h2>Internal Competition</h2>
+                        <p>
+                            Deze zijn ook altijd leuk om te doen!
+                        </p>
+                    </div>
+
+                    <div class="button-info">
+                        <p class="activity-info">
+                            Location: SC 1 <br>
+                            Date: 21/05/2026 <br>
+                            Time: 18:00 - 19:30
+                        </p>
+                        <div class="card-button">
+                            <div class="center-scale">
+                                <span class="scale button">
+                                    <a href="association" class="moody" target="_self">Learn more</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="center">
+        <h1>Tournaments</h1>
+        <div class="carousel">
+            <div class="card-container">
+                <div class="card-carousel">
+                    <span class="center card-image">
+                        <img src="{% static "assets/Images/Munster.jpg" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
+                    </span>
+
+                    <div class="card-text">
+                        <h2>Munster</h2>
+                        <p>
+                            Blijkbaar heel leuk. Ik ben zelf helaas nog nooit geweest.
+                        </p>
+                    </div>
+
+                    <div class="button-info">
+                        <p class="activity-info">
+                            Location: Munster <br>
+                            Date: Ooit <br>
+                            Time: Multiple days
+                        </p>
+                        <div class="card-button">
+                            <div class="center-scale">
+                                <span class="scale button">
+                                    <a href="association" class="moody" target="_self">Learn more</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-carousel">
+                    <span class="center card-image">
+                        <img src="{% static "assets/Images/Logo-Floorball-Festival-Berlin.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
+                    </span>
+                    <div class="card-text">
+                        <h2>Berlin</h2>
+                        <p>
+                            Nieuw tournooi. Ik ben heel benieuwd, wordt vast heel leuk!    
+                        </p>
+                    </div>
+
+                    <div class="button-info">
+                        <p class="activity-info">
+                            Location: Berlin <br>
+                            Date: Ooit <br>
+                            Time: Multiple Days
+                        </p>
+                        <div class="card-button">
+                            <div class="center-scale">
+                                <span class="scale button">
+                                    <a href="association" class="moody" target="_self">Learn more</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-carousel">
+                    <span class="center card-image">
+                        <img src="{% static "assets/Images/isstt35_logo.jpg" %}" alt="Messed Up logo" style="width: auto; height: auto;">
+                    </span>
+
+                    <div class="card-text">
+                        <h2>ISSTT</h2>
+                        <p>
+                            Nu al hyped!
+                        </p>
+                    </div>
+
+                    <div class="button-info">
+                        <p class="activity-info">
+                            Location: Enschede<br>
+                            Date: Weet niemand <br>
+                            Time: Multiple Days
+                        </p>
+                        <div class="card-button">
+                            <div class="center-scale">
+                                <span class="scale button">
+                                    <a href="association" class="moody" target="_self">Learn more</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+{% endblock %}
