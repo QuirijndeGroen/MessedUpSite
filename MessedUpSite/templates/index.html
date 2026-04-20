@@ -11,15 +11,10 @@
 {% block content %}
 <div class="carousel">
 
-    <div class="card-container">
+    <div class="item-container">
 
-        <div class="card-carousel">
-
-            <span class="center card-image">
-                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
-            </span>
-
-            <div class="card-text">
+        <div class="item img-side">
+            <div class="item-text">
                 <h1>E.S.U.V. Messed Up</h1>
                 <p style="font: var(--p1);">
                     We are Messed Up. The floorball association from the University Twente.<br>
@@ -29,21 +24,21 @@
                 </p>
             </div>
 
-            <div class="card-button">
+            <div class="item-button">
                 <div class="center-scale">
                     <span class="scale button">
                         <a href="association" class="moody" target="_self">Learn more</a>
                     </span>
                 </div>
             </div>
+
+            <span class="center item-image">
+                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo">
+            </span>
         </div>
 
-        <div class="card-carousel">
-            <span class="center card-image">
-                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
-            </span>
-
-            <div class="card-text">
+        <div class="item img-side">
+            <div class="item-text">
                 <h1>About Floorball</h1>
                 <p style="font: var(--p1);">
                     Floorball is one of the fasted indoor sports in the world. 
@@ -53,33 +48,38 @@
                 </p>
             </div>
 
-            <div class="card-button">
+            <div class="item-button">
                 <div class="center-scale">
                     <span class="scale button">
                         <a href="floorball" class="moody" target="_self">Learn more</a>
                     </span>
                 </div>
             </div>
+
+            <span class="center item-image">
+                <img src="{% static "assets/Images/Floorball.jpg" %}" alt="Floorball in Action">
+            </span>
         </div>
 
-        <div class="card-carousel">
-            <span class="center card-image">
-                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width: auto; height: 100%;">
-            </span>
-            <div class="card-text">
+        <div class="item img-side">
+            <div class="item-text">
                 <h1>Members</h1>
                 <p style="font: var(--p1);">
                     Hier kan een highlight voor de eerst komende activiteit komen ofzo. Wordt misschien wat moeilijk, maar wel heel vet!
                 </p>
             </div>
 
-            <div class="card-button">
+            <div class="item-button">
                 <div class="center-scale">
                     <span class="scale button">
                         <a href="accounts/members" class="moody" target="_self">Learn more</a>
                     </span>
                 </div>
             </div>
+
+            <span class="center item-image">
+                <img src="{% static "assets/Images/Team.webp" %}" alt="Team">
+            </span>
         </div>
 
     </div>

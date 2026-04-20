@@ -68,13 +68,13 @@
 
 #navbar {
   position: relative;
-  background-color: var(--bg);
-  background: var(--gradient);
-  box-shadow: var(--shadow);
+  background: var(--bg);
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--text-strong);
+  border-bottom: solid 1px var(--border-muted);
+  min-width: 100%;
 }
 
 .navbar-layout {

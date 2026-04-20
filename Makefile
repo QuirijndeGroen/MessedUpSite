@@ -10,5 +10,5 @@ compose-start:
 compose-stop:
 	docker compose down --remove-orphans $(options)
 
-compose-manage.py:
+compose-manage-py:
 	docker compose run --rm $(options) website python manage.py $(cmd)

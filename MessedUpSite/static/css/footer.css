@@ -25,7 +25,8 @@
 
 .text-list {
   line-height: .5rem;
-  background: var(--gradient);
+  background: var(--bg);
+  padding: 0 20px
 }
 
 

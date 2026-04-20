@@ -28,7 +28,7 @@
     --success: oklch(0.5 0.05 160);
     --info: oklch(0.5 0.05 260);
     /* Shadows */
-    --shadow: 0px 4px 4px #00000015, 0px 12px 12px #00000005;;
+    --shadow: 0px 4px 4px #00000015, 0px 12px 12px #00000005;
     /* Type */
     --ff: "Montserrat", sans-serif;
     --h1: bold 54px/60px var(--ff);
@@ -56,9 +56,9 @@
 
 .darkmode {
     /* Background */
-    --bg-dark: hsl(0, 0%, 12%);
-    --bg: hsl(0, 0%, 16%);
-    --bg-light: hsl(0, 0%, 18%);
+    --bg-dark: rgb(9, 9, 9);
+    --bg: rgb(19, 19, 19);
+    --bg-light: rgb(31, 31, 31);
     --gradient: linear-gradient(45deg, var(--bg-light), var(--bg));
     --gradient-hover: linear-gradient(45deg, var(--bg-light) 97%, var(--bg));
     --gray: hsl(0, 0%, 60%);
@@ -68,8 +68,8 @@
     --text-light: rgba(255, 255, 255, 0.38);
     /* Borders */
     --highlight: oklch(0.5 0 142);
-    --border: oklch(0.4 0 142);
-    --border-muted: oklch(0.3 0 142);
+    --border: rgb(75, 75, 75);
+    --border-muted: rgb(36, 36, 36);
     --border-card: solid 1px var(--border-muted);
     /* Alerts */
     --danger: oklch(0.7 0.05 30);
@@ -91,6 +91,8 @@ body {
   font: var(--p);
   -webkit-text-size-adjust:100%;
   -webkit-tap-highlight-color:transparent;
+  margin: 0;
+  padding: 0;
 }
 main {
   display: flex;
@@ -141,6 +143,14 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
+.bg-light {
+  background-color: var(--bg-light);
+}
+
+.bg {
+  background-color: var(--bg);
+}
+
 /*===============================
                buttons
   ===============================*/
@@ -151,7 +161,7 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
   font: var(--h4);
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   border: none;
   transition: var(--transition);
   background: none;
@@ -174,10 +184,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* moody */
 .moody{
-  border: solid 3px var(--primary);
+  box-shadow: inset 0 0 0 3px var(--primary);
 }
 .moody:hover {
-  box-shadow: var(--shadow);
+  box-shadow: inset 0 0 0 3px var(--primary), var(--shadow);
 }
 
 .moody-fill{
@@ -198,7 +208,6 @@ h1, h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
 }
 .card{
-  padding: 20px;
   border-radius: 20px;
   box-shadow: var(--shadow);
   flex: 1;
