@@ -20,7 +20,7 @@ To make the website:
 Download the repo and open a teminal at the root of the project. If you havn't used the site before, build the project. Afterwards run compose start to run the docker image.
 
 ```bash
-git clone https://github.com/QuirijndeGroen/Messed-Up.git
+git clone https://github.com/QuirijndeGroen/MessedUpSite.git
 cd MessedUpSite
 ```
 
@@ -39,6 +39,8 @@ http://localhost:9000/
 ```
 
 on your preferred browser.
+
+If the setup doesn't work the first time, rerun compose-start. This should fix the sites' database problems.
 
 ## Authors
 
