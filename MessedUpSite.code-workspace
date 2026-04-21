@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "docwriter.progress.trackFunctions": true,
+    "docwriter.style": "Auto-detect",
+    "docwriter.progress.trackClasses": true,
+    "cSpell.words": ["postgres", "PYTHONUNBUFFERED", "runserver"],
+    "editor.formatOnSave": true,
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-azuretools.vscode-containers",
+      "ms-python.python",
+      "ms-python.black-formatter",
+      "ms-vscode.makefile-tools",
+      "pkief.material-icon-theme",
+    ],
+  },
+}

@@ -13,6 +13,12 @@ An in-depth paragraph about your project and overview of use.
 The website is Django based. For the database postgresql is used and for hosting kerbernetes is used.
 The website is dockerized and thus imports the nessisary packages. The website can atleast be made with Docker 29.3.1.
 
+Software to install:
+
+- docker
+- docker-compose
+- make
+
 ### Hosting
 
 To make the website:
@@ -48,9 +54,9 @@ Quirijn de Groen
 
 ## Version History
 
-* 0.1.1
-  * Refectored carousels and styles
-  * Added automatic carousel rotation
-  * Added some new example images
-* 0.1.0
-  * Initial Release
+- 0.1.1
+  - Refectored carousels and styles
+  - Added automatic carousel rotation
+  - Added some new example images
+- 0.1.0
+  - Initial Release
