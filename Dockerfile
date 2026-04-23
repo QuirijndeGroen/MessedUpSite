@@ -1,7 +1,6 @@
-FROM python:3.12-slim AS production
+FROM python:3.12-slim-trixie AS production
 
 ENV PYTHONUNBUFFERED=1
-WORKDIR /app/
 
 RUN apt-get update && \
     apt-get install -y \
@@ -12,21 +11,24 @@ RUN apt-get update && \
     musl-dev \
     openssl \
     postgresql \
-    libpq-dev 
-
-COPY requirements/prod.txt ./requirements/prod.txt
-RUN pip install --progress-bar off -r ./requirements/prod.txt
+    libpq-dev
 
 COPY manage.py ./manage.py
-COPY setup.cfg ./setup.cfg
 COPY MessedUpSite ./MessedUpSite
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY uv.lock ./uv.lock
+COPY pyproject.toml ./pyproject.toml
+
+WORKDIR /app/
+
+RUN uv sync --no-dev --locked
 
 EXPOSE 9000
 
 
 FROM production AS development
 
-COPY requirements/dev.txt ./requirements/dev.txt
-RUN pip install --progress-bar off -r ./requirements/dev.txt
+RUN uv sync --dev --locked
 
 COPY . .

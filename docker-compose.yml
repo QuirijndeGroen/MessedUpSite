@@ -13,7 +13,7 @@ x-app-variables: &app-variables
 services:
   website:
     image: messed-up-website:latest 
-    command: python manage.py runserver 0.0.0.0:9000
+    command: uv run manage.py runserver 0.0.0.0:9000
     volumes: *services-volumes
     environment: *app-variables
     depends_on:
@@ -23,7 +23,7 @@ services:
 
   db_migrate:
     image: messed-up-website:latest 
-    command: python manage.py migrate
+    command: uv run manage.py migrate
     volumes: *services-volumes
     environment: *app-variables
     depends_on:
