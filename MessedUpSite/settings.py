@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "MessedUpSite.apps.accounts",
+    "rest_framework",
+    "MessedUpSite.apps.activityapi",
 ]
 
 MIDDLEWARE = [

@@ -62,10 +62,17 @@
         </div>
 
         <div class="item img-side">
+            {% with public_activity=activity.objects.all.first %}
             <div class="item-text">
                 <h1>Members</h1>
+                <h2>{{ public_activity.title }}</h2>
                 <p style="font: var(--p1);">
-                    Hier kan een highlight voor de eerst komende activiteit komen ofzo. Wordt misschien wat moeilijk, maar wel heel vet!
+                    {{ public_activity.description }}
+                </p>
+                <p style="margin:0">
+                    Location: {{ public_activity.location }} <br>
+                    Date: {{ public_activity.start_time|date:"d/m/Y" }} - {{ public_activity.end_time|date:"d/m/Y" }} <br>
+                    Time: {{ public_activity.start_time }} - {{ public_activity.end_time }}
                 </p>
             </div>
 
@@ -78,8 +85,9 @@
             </div>
 
             <span class="center item-image">
-                <img src="{% static "assets/Images/Team.webp" %}" alt="Team">
+                <img src={{ public_activity.image.url }} alt="Team">
             </span>
+            {% endwith %}
         </div>
 
     </div>

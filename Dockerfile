@@ -1,4 +1,4 @@
-FROM python:3.12-slim-trixie AS production
+FROM python:3.13-slim AS production
 
 ENV PYTHONUNBUFFERED=1
 
@@ -29,6 +29,6 @@ EXPOSE 9000
 
 FROM production AS development
 
-RUN uv sync --dev --locked
+RUN uv sync --dev
 
 COPY . .
