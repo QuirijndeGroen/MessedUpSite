@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("activityapi", "0003_alter_activity_type"),
+        ("activities", "0003_alter_activity_type"),
     ]
 
     operations = [

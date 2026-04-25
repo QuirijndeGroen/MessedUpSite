@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
-from MessedUpSite.apps.activityapi.models import Activity
+from MessedUpSite.apps.activities.models import Activity
 
 
 def index(request: HttpRequest) -> HttpResponse:

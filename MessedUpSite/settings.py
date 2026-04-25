@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "MessedUpSite.apps.accounts",
     "rest_framework",
-    "MessedUpSite.apps.activityapi",
+    "MessedUpSite.apps.activities",
+    "MessedUpSite.apps.documents",
 ]
 
 MIDDLEWARE = [

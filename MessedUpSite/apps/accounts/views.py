@@ -2,7 +2,8 @@ from django.http import HttpRequest
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from MessedUpSite.apps.activityapi.models import Activity
+from MessedUpSite.apps.documents.models import Document
+from MessedUpSite.apps.activities.models import Activity
 
 
 @login_required(login_url="/accounts/login/")
@@ -18,8 +19,15 @@ def MembersView(request: HttpRequest):
     tournaments = Activity.objects.filter(is_active=True, type="tournament").order_by(
         "start_time"
     )
+    gma_documents = Document.objects.all().order_by("-created").filter(type="gma")
+    other_documents = Document.objects.all().order_by("-created").filter(type="other")
     return render(
         request,
         "accounts/members.html",
-        {"activities": activities, "tournaments": tournaments},
+        {
+            "activities": activities,
+            "tournaments": tournaments,
+            "gma_documents": gma_documents,
+            "other_documents": other_documents,
+        },
     )

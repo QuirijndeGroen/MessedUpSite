@@ -5,88 +5,112 @@
 {% block title %}Members Page{% endblock %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static "css/carousel.css" %}">
-    <link rel="stylesheet" href="{% static "css/members.css" %}">
+<link rel="stylesheet" href="{% static "css/carousel.css" %}">
+<link rel="stylesheet" href="{% static "css/members.css" %}">
 {% endblock %}
 
 {% block content %}
 <h1 style="padding:0;margin:0;">Upcoming:</h1>
 <div class="carousel-container card bg">
-    <div class="center">
-        <h1>Activities</h1>
-        <div class="carousel">
-            <div class="item-container">
-                {% for activity in activities %}
-                <div class="item card bg-light img-top">
-                    <div class="item-text">
-                      <h1>Members</h1>
-                      <h2>{{ activity.title }}</h2>
-                      <p style="font: var(--p1);">
-                          {{ activity.description }}
-                      </p>
-                    </div>
-                    <div class="item-info">
-                      <p style="margin:0">
-                        Location: {{ activity.location }} <br>
-                        Date: {% if activity.start_time.date == activity.end_time.date %}{{ activity.start_time|date:"d/m/Y" }} {% else %} {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }} {% endif %} <br>
-                        Time: {{ activity.start_time|date:"H:i" }} - {{ activity.end_time|date:"H:i" }}
-                      </p>
-                    </div>
-                    
-                    <div class="item-button">
-                      <div class="center-scale">
-                        <span class="scale button">
-                          <a href="accounts/members" class="moody" target="_self">Learn more</a>
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <span class="center item-image">
-                      <img src={{ activity.image.url }} alt="Actvivity Image">
-                    </span>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+  <div class="center">
+    <h1>Activities</h1>
+    <div class="carousel">
+      <div class="item-container">
+        {% for activity in activities %}
+        <div class="item card bg-light img-top">
+          <div class="item-text">
+            <h1>Members</h1>
+            <h2>{{ activity.title }}</h2>
+            <p style="font: var(--p1);">
+              {{ activity.description }}
+            </p>
+          </div>
+          <div class="item-info">
+            <p style="margin:0">
+              Location: {{ activity.location }} <br>
+              Date: {% if activity.start_time.date == activity.end_time.date %}{{ activity.start_time|date:"d/m/Y" }} {% else %} {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }} {% endif %} <br>
+              Time: {{ activity.start_time|date:"H:i" }} - {{ activity.end_time|date:"H:i" }}
+            </p>
+          </div>
 
-    <div class="center">
-        <h1>Tournaments</h1>
-        <div class="carousel">
-            <div class="item-container">
-                {% for tournament in tournaments %}
-                <div class="item card bg-light img-top">
-                    <div class="item-text">
-                      <h1>Members</h1>
-                      <h2>{{ tournament.title }}</h2>
-                      <p style="font: var(--p1);">
-                          {{ tournament.description }}
-                      </p>
-                    </div>
-                    <div class="item-info">
-                      <p style="margin:0">
-                        Location: {{ tournament.location }} <br>
-                        Date: {% if tournament.start_time.date == tournament.end_time.date %}{{ tournament.start_time|date:"d/m/Y" }} {% else %} {{ tournament.start_time|date:"d/m/Y" }} - {{ tournament.end_time|date:"d/m/Y" }} {% endif %} <br>
-                        Time: {{ tournament.start_time|date:"H:i" }} - {{ tournament.end_time|date:"H:i" }}
-                      </p>
-                    </div>
-                    
-                    <div class="item-button">
-                      <div class="center-scale">
-                        <span class="scale button">
-                          <a href="accounts/members" class="moody" target="_self">Learn more</a>
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <span class="center item-image">
-                      <img src={{ tournament.image.url }} alt="Tournament Image">
-                    </span>
-                </div>
-                {% endfor %}
+          <div class="item-button">
+            <div class="center-scale">
+              <span class="scale button">
+                <a href="accounts/members" class="moody" target="_self">Learn more</a>
+              </span>
             </div>
+          </div>
+
+          <span class="center item-image">
+            <img src={{ activity.image.url }} alt="Actvivity Image">
+          </span>
         </div>
+        {% endfor %}
+      </div>
     </div>
-</div> 
+  </div>
+
+  <div class="center">
+    <h1>Tournaments</h1>
+    <div class="carousel">
+      <div class="item-container">
+        {% for tournament in tournaments %}
+        <div class="item card bg-light img-top">
+          <div class="item-text">
+            <h1>Members</h1>
+            <h2>{{ tournament.title }}</h2>
+            <p style="font: var(--p1);">
+              {{ tournament.description }}
+            </p>
+          </div>
+          <div class="item-info">
+            <p style="margin:0">
+              Location: {{ tournament.location }} <br>
+              Date: {% if tournament.start_time.date == tournament.end_time.date %}{{ tournament.start_time|date:"d/m/Y" }} {% else %} {{ tournament.start_time|date:"d/m/Y" }} - {{ tournament.end_time|date:"d/m/Y" }} {% endif %} <br>
+              Time: {{ tournament.start_time|date:"H:i" }} - {{ tournament.end_time|date:"H:i" }}
+            </p>
+          </div>
+
+          <div class="item-button">
+            <div class="center-scale">
+              <span class="scale button">
+                <a href="accounts/members" class="moody" target="_self">Learn more</a>
+              </span>
+            </div>
+          </div>
+
+          <span class="center item-image">
+            <img src={{ tournament.image.url }} alt="Tournament Image">
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sep-line"></div>
+<h1>Documents</h1>
+<div class="carousel-container card bg">
+  <div class="center">
+    <h2>GMA Documents</h2>
+    <div class="document card bg-light">
+      {% for document in gma_documents %}
+      <h4>{{ document.title }}</h4>
+      <p style="font: var(--p1);">{{ document.description }}</p>
+      <a href="{{ document.file.url }}" target="_blank" class="moody">View Document</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="center">
+    <h2>Other Documents</h2>
+    <div class="document card bg-light">
+      {% for document in other_documents %}
+      <h4>{{ document.title }}</h4>
+      <p style="font: var(--p1);">{{ document.description }}</p>
+      <a href="{{ document.file.url }}" target="_blank" class="moody">View Document</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 <script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 {% endblock %}
