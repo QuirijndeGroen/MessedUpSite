@@ -1,17 +1,9 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %} {% with profile=user.profile %} {%
+block title %}{{ user.username }}{% endblock %} {% block content %}
 
-{% with profile=user.profile %}
+<h1>Hi, {{user.get_full_name}}!</h1>
 
-{% block title %}{{ user.username }}{% endblock %}
+<h2>{{ profile.persona|default:"" }}</h2>
+<p>This is your profile page.</p>
 
-{% block content %}
-
-    <h1>Hi, {{user.get_full_name}}!</h1>
-
-        <h2> {{ profile.persona|default:"" }}</h2>
-        <p>This is your profile page.</p>
-
-{% endblock %}
-
-{% endwith %}
+{% endblock %} {% endwith %}

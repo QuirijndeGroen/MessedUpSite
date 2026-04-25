@@ -16,64 +16,36 @@
         <h1>Activities</h1>
         <div class="carousel">
             <div class="item-container">
+                {% for activity in activities %}
                 <div class="item card bg-light img-top">
-
-                    <span class="center item-image">
-                        <img src="{% static "assets/Images/kickin.png" %}" alt="Messed Up logo">
-                    </span>
-
-                    <span class="item-text">
-                        <h2>Kick-In</h2>
-                        <p>
-                            We gaan hier natuurlijk weer knallen!
-                        </p>
-                    </span>
-
-                    <span class="item-info">
-                        <p style="margin:0">
-                            Location: Enschede <br>
-                            Date: 20/08/2026 <br>
-                            Time: All Day
-                        </p>
-                    </span>
-
-                    <span class="item-button">
-                        <span class="center-scale">
-                            <span class="scale button">
-                                <a href="association" class="moody" target="_self">Learn more</a>
-                            </span>
-                        </span>
-                    </span>
-                </div>
-
-                <div class="item card bg-light img-top">
-                    <span class="center item-image">
-                        <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo">
-                    </span>
-
-
                     <div class="item-text">
-                        <h2>Internal Competition</h2>
-                        <p>
-                            Deze zijn ook altijd leuk om te doen!
-                        </p>
+                      <h1>Members</h1>
+                      <h2>{{ activity.title }}</h2>
+                      <p style="font: var(--p1);">
+                          {{ activity.description }}
+                      </p>
                     </div>
-
-                    <span class="item-info">
-                        <p style="margin:0">
-                            Location: SC 1 <br>
-                            Date: 21/05/2026 <br>
-                            Time: 18:00 - 19:30
-                        </p>
-                    </span>
+                    <div class="item-info">
+                      <p style="margin:0">
+                        Location: {{ activity.location }} <br>
+                        Date: {% if activity.start_time.date == activity.end_time.date %}{{ activity.start_time|date:"d/m/Y" }} {% else %} {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }} {% endif %} <br>
+                        Time: {{ activity.start_time|date:"H:i" }} - {{ activity.end_time|date:"H:i" }}
+                      </p>
+                    </div>
+                    
                     <div class="item-button">
-                        <div class="center-scale">
-                            <span class="scale button">
-                                <a href="association" class="moody" target="_self">Learn more</a>
-                            </span>
-                        </div>
+                      <div class="center-scale">
+                        <span class="scale button">
+                          <a href="accounts/members" class="moody" target="_self">Learn more</a>
+                        </span>
+                      </div>
                     </div>
+                    
+                    <span class="center item-image">
+                      <img src={{ activity.image.url }} alt="Actvivity Image">
+                    </span>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -82,88 +54,36 @@
         <h1>Tournaments</h1>
         <div class="carousel">
             <div class="item-container">
+                {% for tournament in tournaments %}
                 <div class="item card bg-light img-top">
-                    <span class="center item-image">
-                        <img src="{% static "assets/Images/Munster.jpg" %}" alt="Messed Up logo">
-                    </span>
-
                     <div class="item-text">
-                        <h2>Munster</h2>
-                        <p>
-                            Blijkbaar heel leuk. Ik ben zelf helaas nog nooit geweest.
-                        </p>
+                      <h1>Members</h1>
+                      <h2>{{ tournament.title }}</h2>
+                      <p style="font: var(--p1);">
+                          {{ tournament.description }}
+                      </p>
                     </div>
-
-                    <span class="item-info">
-                        <p style="margin:0">
-                            Location: Munster <br>
-                            Date: Ooit <br>
-                            Time: Multiple days
-                        </p>
-                    </span>
+                    <div class="item-info">
+                      <p style="margin:0">
+                        Location: {{ tournament.location }} <br>
+                        Date: {% if tournament.start_time.date == tournament.end_time.date %}{{ tournament.start_time|date:"d/m/Y" }} {% else %} {{ tournament.start_time|date:"d/m/Y" }} - {{ tournament.end_time|date:"d/m/Y" }} {% endif %} <br>
+                        Time: {{ tournament.start_time|date:"H:i" }} - {{ tournament.end_time|date:"H:i" }}
+                      </p>
+                    </div>
+                    
                     <div class="item-button">
-                        <div class="center-scale">
-                            <span class="scale button">
-                                <a href="association" class="moody" target="_self">Learn more</a>
-                            </span>
-                        </div>
+                      <div class="center-scale">
+                        <span class="scale button">
+                          <a href="accounts/members" class="moody" target="_self">Learn more</a>
+                        </span>
+                      </div>
                     </div>
-                </div>
-
-                <div class="item card bg-light img-top">
+                    
                     <span class="center item-image">
-                        <img src="{% static "assets/Images/Logo-Floorball-Festival-Berlin.png" %}" alt="Messed Up logo">
+                      <img src={{ tournament.image.url }} alt="Tournament Image">
                     </span>
-                    <div class="item-text">
-                        <h2>Berlin</h2>
-                        <p>
-                            Nieuw tournooi. Ik ben heel benieuwd, wordt vast heel leuk!    
-                        </p>
-                    </div>
-
-                    <span class="item-info">
-                        <p style="margin:0">
-                            Location: Berlin <br>
-                            Date: Ooit <br>
-                            Time: Multiple Days
-                        </p>
-                    </span>
-                    <div class="item-button">
-                        <div class="center-scale">
-                            <span class="scale button">
-                                <a href="association" class="moody" target="_self">Learn more</a>
-                            </span>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="item card bg-light img-top">
-                    <span class="center item-image">
-                        <img src="{% static "assets/Images/isstt35_logo.jpg" %}" alt="Messed Up logo">
-                    </span>
-
-                    <div class="item-text">
-                        <h2>ISSTT</h2>
-                        <p>
-                            Nu al hyped!
-                        </p>
-                    </div>
-
-                    <span class="item-info">
-                        <p style="margin:0">
-                            Location: Enschede<br>
-                            Date: Weet niemand <br>
-                            Time: Multiple Days
-                        </p>
-                    </span>
-                    <div class="item-button">
-                        <div class="center-scale">
-                            <span class="scale button">
-                                <a href="association" class="moody" target="_self">Learn more</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

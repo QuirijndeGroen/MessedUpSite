@@ -22,7 +22,7 @@ COPY pyproject.toml ./pyproject.toml
 
 WORKDIR /app/
 
-RUN uv sync --no-dev --locked
+RUN uv sync --no-dev
 
 EXPOSE 9000
 

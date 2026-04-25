@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
+from MessedUpSite.apps.activityapi.models import Activity
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, "index.html")
+    next_activity = (
+        Activity.objects.filter(is_active=True).order_by("start_time").first()
+    )
+    return render(request, "index.html", {"next_activity": next_activity})
 
 
 def floorball(request: HttpRequest) -> HttpResponse:

@@ -1,20 +1,16 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Login{% endblock %}
-
+{% extends "base.html" %} {% load static %} {% block title %}Login{% endblock %}
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
-{% block content %}
-    <div class="center cards" id="login-page">
-        <div class="center card">
-            <h1>Login</h1>
-            <form method="post" class="right login-form">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <span class="button right"><button type="submit" class="scale moody">Login</button></span>
-            </form>
-        </div>
-    </div>
+<link rel="stylesheet" href="{% static 'css/login.css' %}" />
+{% endblock %} {% block content %}
+<div class="center cards" id="login-page">
+  <div class="center card">
+    <h1>Login</h1>
+    <form method="post" class="right login-form">
+      {% csrf_token %} {{ form.as_p }}
+      <div class="button right">
+        <button type="submit" class="scale moody">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
