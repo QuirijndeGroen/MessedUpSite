@@ -19,15 +19,13 @@ def MembersView(request: HttpRequest):
     tournaments = Activity.objects.filter(is_active=True, type="tournament").order_by(
         "start_time"
     )
-    gma_documents = Document.objects.all().order_by("-created").filter(type="gma")
-    other_documents = Document.objects.all().order_by("-created").filter(type="other")
+    documents = Document.objects.all().order_by("created")
     return render(
         request,
         "accounts/members.html",
         {
             "activities": activities,
             "tournaments": tournaments,
-            "gma_documents": gma_documents,
-            "other_documents": other_documents,
+            "documents": documents,
         },
     )

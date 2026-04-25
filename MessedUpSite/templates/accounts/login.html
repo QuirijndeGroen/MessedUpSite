@@ -1,16 +1,32 @@
-{% extends "base.html" %} {% load static %} {% block title %}Login{% endblock %}
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %}Login{% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}" />
-{% endblock %} {% block content %}
-<div class="center cards" id="login-page">
-  <div class="center card">
-    <h1>Login</h1>
-    <form method="post" class="right login-form">
-      {% csrf_token %} {{ form.as_p }}
-      <div class="button right">
-        <button type="submit" class="scale moody">Login</button>
+{% endblock %} 
+
+{% block content %}
+<div id="login-page" class="center">
+  <form role="form" class="center" method="post" action="{% url 'login' %}">
+    {% csrf_token %} 
+    <div class="center card bg">
+      <h2 class="center" style="margin-bottom: 0;">Login</h2>
+      <div class="center login-form">
+        {% for field in form %}
+        {% if field.id_for_label == "id_username" %}
+        <input class="form-control" id="username" maxlength="30" name="{{ field.html_name }}" type="text" placeholder="Username" /> 
+        {% elif field.id_for_label == "id_password" %}
+        <input class="form-control" id="password" maxlength="30" name="{{ field.html_name }}" type="password" placeholder="Password" /> 
+        {% endif %}
+        {{ field.errors }}
+        {% endfor %}
       </div>
-    </form>
-  </div>
+      <div class="right button">
+        <input type="submit" class="scale moody" style="color:var(--text-strong); text-decoration: none;" value="login" />
+      </div>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+  </form>
+  <div class="fill"></div>
 </div>
 {% endblock %}

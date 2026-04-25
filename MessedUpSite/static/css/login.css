@@ -4,10 +4,48 @@
             Login Page
 ================================== */
 
+#footer {
+  position: absolute;
+  bottom: 0;
+}
+
 #login-page {
-  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fill {
+  flex: 0 1 auto;
 }
 
 .card {
-  background: var(--gradient);
+  padding: 20px;
 }
+
+.login-form {
+  margin: 20px;
+}
+
+.form-control, .form-control:focus, .form-control:checked, .form-control:active, .form-control:autofill, 
+.form-control:-webkit-autofill, .form-control:-webkit-autofill:focus, .form-control:-webkit-autofill:active, 
+.form-control:-webkit-autofill:checked {
+  width: 100%;
+  height: 100%;
+  color: var(--text-strong);
+  background-color: var(--bg-light);
+  border-radius: 20px;
+  font: var(--h4);
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+}
+
+.login-form:hover, .login-form:focus {
+  border: none;
+}
+
+.id_username
+
+.id_password }

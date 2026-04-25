@@ -105,8 +105,8 @@ main {
 }
 
 a, a:visited, a:focus, a:hover, a:active {
-  text-decoration: none;
-  color:var(--text-mid);
+  text-decoration: underline;
+  color:var(--primary);
   cursor: pointer;
 }
 

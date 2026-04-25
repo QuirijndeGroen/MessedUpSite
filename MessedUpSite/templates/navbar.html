@@ -1,57 +1,63 @@
 {% load static %}
 
 <head>
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 </head>
 
-<header id="navbar" >
+<header id="navbar">
     <div class="navbar-layout">
-        
+
         <div class="navbar-logo scale">
             {% url 'public:index' as index_url %}
             <a href="{{ index_url }}" target="_self" id="main-logo-link">
-                <img src="{% static "assets/Images/Logo Dark transparent.png" %}" alt="Messed Up logo" style="width:7rem;height:7rem;">
-                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo" style="width:7rem;height:7rem;">
-            </a>  
+                <img src="{% static "assets/Images/Logo Dark transparent.png" %}" alt="Messed Up logo"
+                    style="width:7rem;height:7rem;">
+                <img src="{% static "assets/Images/Logo Light.png" %}" alt="Messed Up logo"
+                    style="width:7rem;height:7rem;">
+            </a>
         </div>
-        
+
         <div class="navbar-links">
 
             {% url 'public:association' as association_url %}
             {% if request.path == association_url %}
-                Association
+            Association
             {% else %}
             <span class="scale text-link">
-                <a href="{{ association_url }}" style="color:var(--text-strong);">Association</a>{% endif %}
+                <a href="{{ association_url }}"
+                    style="color:var(--text-strong); text-decoration: none;">Association</a>{% endif %}
             </span>
 
             {% url 'public:floorball' as floorball_url %}
             {% if request.path == floorball_url %}
-                Floorball
+            Floorball
             {% else %}
             <span class="scale text-link">
-                <a href="{{ floorball_url }}" style="color:var(--text-strong);">Floorball</a>{% endif %}
+                <a href="{{ floorball_url }}" style="color:var(--text-strong); text-decoration: none;">Floorball</a>
+                {% endif %}
             </span>
 
             {% url 'members' as members_url %}
             {% if request.path == members_url %}
-                Members
+            Members
             {% else %}
             <span class="scale text-link">
-                <a href="{{ members_url }}" style="color:var(--text-strong);">Members</a>{% endif %}
+                <a href="{{ members_url }}" style="color:var(--text-strong); text-decoration: none;">Members</a>
+                {% endif %}
             </span>
 
         </div>
 
         <div class="auth-buttons">
-        {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
 
             {% url 'profile' as profile_url %}
             {% if request.path == profile_url %}
-                Hi, {{ user.username }}!
+            Hi, {{ user.username }}!
             {% else %}
             <span class="scale text-link">
-                <a href="{{ profile_url }}" style="color:var(--text-strong);">Hi, {{ user.username }}!</a>{% endif %}
+                <a href="{{ profile_url }}" style="color:var(--text-strong); text-decoration: none;">Hi,
+                    {{ user.username }}!</a>{% endif %}
             </span>
 
             {% url 'logout' as logout_url %}
@@ -61,28 +67,36 @@
                     Logout
                 </button>
             </form>
-        {% else %}
+            {% else %}
             {% url 'login' as login_url %}
             {% if request.path == login_url %}
             {% else %}
             <span class="button scale">
-                <a href="{{ login_url }}" class="moody" style="color:var(--text-strong);">
+                <a href="{{ login_url }}" class="moody" style="color:var(--text-strong); text-decoration: none;">
                     Login
                 </a>
             </span>
             {% endif %}
-            
+
             {% url 'public:contact' as contact_url %}
             <span class="button scale">
-                <a href="{{ contact_url }}" class="moody-fill" style="color:var(--text-strong);">
+                <a href="{{ contact_url }}" class="moody-fill" style="color:var(--text-strong); text-decoration: none;">
                     Sign Up!
                 </a>
             </span>
-        {% endif %}
+            {% endif %}
 
             <button id="theme-switch" class="moody-fill scale">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M338.5-338.5Q280-397 280-480t58.5-141.5Q397-680 480-680t141.5 58.5Q680-563 680-480t-58.5 141.5Q563-280 480-280t-141.5-58.5ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z"/></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#e3e3e3">
+                    <path
+                        d="M338.5-338.5Q280-397 280-480t58.5-141.5Q397-680 480-680t141.5 58.5Q680-563 680-480t-58.5 141.5Q563-280 480-280t-141.5-58.5ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#e3e3e3">
+                    <path
+                        d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Z" />
+                </svg>
             </button>
         </div>
     </div>

@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" >
-    <link rel="stylesheet" href="{% static 'css/carousel.css' %}" >
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/carousel.css' %}">
 {% endblock %}
 
 {% block title %}Home{% endblock title %}
@@ -18,16 +18,19 @@
                 <h1>E.S.U.V. Messed Up</h1>
                 <p style="font: var(--p1);">
                     We are Messed Up. The floorball association from the University Twente.<br>
-                    Next to trainings we play in multiple competitions, join fun tournaments and organize amazing activities.<br>
+                    Next to trainings we play in multiple competitions, join fun tournaments and organize amazing
+                    activities.<br>
                     <br>
-                    Interested in trying floorball out? Send us an <a href="mailto:info@messedup.utwente.nl">e-mail</a> or just stop by one of our trainings!<br>
+                    Interested in trying floorball out? Send us an <a href="mailto:info@messedup.utwente.nl">e-mail</a>
+                    or just stop by one of our trainings!<br>
                 </p>
             </div>
 
             <div class="item-button">
                 <div class="center-scale">
                     <span class="scale button">
-                        <a href="association" class="moody" target="_self">Learn more</a>
+                        <a href="association" class="moody" target="_self"
+                            style="color:var(--text-strong); text-decoration: none;">Learn more</a>
                     </span>
                 </div>
             </div>
@@ -41,17 +44,19 @@
             <div class="item-text">
                 <h1>About Floorball</h1>
                 <p style="font: var(--p1);">
-                    Floorball is one of the fasted indoor sports in the world. 
+                    Floorball is one of the fasted indoor sports in the world.
                     We play year-round with always some members enthusiastic to play a game.<br>
                     <br>
-                    So, have you always enjoyed indoor hockey more than field hockey? Or would you like something new? Check out our training times and drop by!
+                    So, have you always enjoyed indoor hockey more than field hockey? Or would you like something new?
+                    Check out our training times and drop by!
                 </p>
             </div>
 
             <div class="item-button">
                 <div class="center-scale">
                     <span class="scale button">
-                        <a href="floorball" class="moody" target="_self">Learn more</a>
+                        <a href="floorball" class="moody" target="_self"
+                            style="color:var(--text-strong); text-decoration: none;">Learn more</a>
                     </span>
                 </div>
             </div>
@@ -65,41 +70,44 @@
             {% if next_activity %}
 
             <div class="item-text">
-              <h1>Members</h1>
-              <h2>{{ next_activity.title }}</h2>
-              <p style="font: var(--p1);">
-                  {{ next_activity.description }}
-              </p>
+                <h1>Members</h1>
+                <h2>{{ next_activity.title }}</h2>
+                <p style="font: var(--p1);">
+                    {{ next_activity.description }}
+                </p>
             </div>
             <div class="item-info">
-              <p style="margin:0">
-                Location: {{ next_activity.location }} <br>
-                Date: {% if next_activity.start_time.date == next_activity.end_time.date %}{{ next_activity.start_time|date:"d/m/Y" }} {% else %} {{ next_activity.start_time|date:"d/m/Y" }} - {{ next_activity.end_time|date:"d/m/Y" }} {% endif %} <br>
-                Time: {{ next_activity.start_time|date:"H:i" }} - {{ next_activity.end_time|date:"H:i" }}
-              </p>
+                <p style="margin:0">
+                    Location: {{ next_activity.location }} <br>
+                    Date: {% if next_activity.start_time.date == next_activity.end_time.date %}{{
+                    next_activity.start_time|date:"d/m/Y" }} {% else %} {{ next_activity.start_time|date:"d/m/Y" }} - {{
+                    next_activity.end_time|date:"d/m/Y" }} {% endif %} <br>
+                    Time: {{ next_activity.start_time|date:"H:i" }} - {{ next_activity.end_time|date:"H:i" }}
+                </p>
             </div>
-            
+
             <div class="item-button">
-              <div class="center-scale">
-                <span class="scale button">
-                  <a href="accounts/members" class="moody" target="_self">Learn more</a>
-                </span>
-              </div>
+                <div class="center-scale">
+                    <span class="scale button">
+                        <a href="accounts/members" class="moody" target="_self"
+                            style="color:var(--text-strong); text-decoration: none;">Learn more</a>
+                    </span>
+                </div>
             </div>
-            
+
             <span class="center item-image">
-              <img src={{ next_activity.image.url }} alt="Actvivity Image">
+                <img src={{ next_activity.image.url }} alt="Actvivity Image">
             </span>
-            
+
             {% else %}
             <div class="item-text">
-              <h1>Members</h1>
-              <h2>No upcoming activities</h2>
-              <p style="font: var(--p1);">
-                  There are currently no upcoming activities. Check back later for updates!
-              </p>
+                <h1>Members</h1>
+                <h2>No upcoming activities</h2>
+                <p style="font: var(--p1);">
+                    There are currently no upcoming activities. Check back later for updates!
+                </p>
             </div>
-            {% endif %}            
+            {% endif %}
         </div>
 
     </div>

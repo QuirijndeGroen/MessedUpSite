@@ -11,10 +11,10 @@
 
 {% block content %}
 <h1 style="padding:0;margin:0;">Upcoming:</h1>
-<div class="carousel-container card bg">
+<div class="split-container card bg">
   <div class="center">
     <h1>Activities</h1>
-    <div class="carousel">
+    <div class="carousel"">
       <div class="item-container">
         {% for activity in activities %}
         <div class="item card bg-light img-top">
@@ -28,7 +28,10 @@
           <div class="item-info">
             <p style="margin:0">
               Location: {{ activity.location }} <br>
-              Date: {% if activity.start_time.date == activity.end_time.date %}{{ activity.start_time|date:"d/m/Y" }} {% else %} {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }} {% endif %} <br>
+              Date: {% if activity.start_time.date == activity.end_time.date %}
+              {{ activity.start_time|date:"d/m/Y" }} {% else %}
+              {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }}
+              {% endif %} <br>
               Time: {{ activity.start_time|date:"H:i" }} - {{ activity.end_time|date:"H:i" }}
             </p>
           </div>
@@ -36,7 +39,8 @@
           <div class="item-button">
             <div class="center-scale">
               <span class="scale button">
-                <a href="accounts/members" class="moody" target="_self">Learn more</a>
+                <a href="accounts/members" class="moody" target="_self"
+                  style="color:var(--text-strong); text-decoration: none;">Learn more</a>
               </span>
             </div>
           </div>
@@ -46,6 +50,9 @@
           </span>
         </div>
         {% endfor %}
+        {% if activities|length == 0 %}
+        <h2 style="text-align: center;">No upcoming activities.</h2>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -66,7 +73,10 @@
           <div class="item-info">
             <p style="margin:0">
               Location: {{ tournament.location }} <br>
-              Date: {% if tournament.start_time.date == tournament.end_time.date %}{{ tournament.start_time|date:"d/m/Y" }} {% else %} {{ tournament.start_time|date:"d/m/Y" }} - {{ tournament.end_time|date:"d/m/Y" }} {% endif %} <br>
+              Date: {% if tournament.start_time.date == tournament.end_time.date %}
+              {{ tournament.start_time|date:"d/m/Y"}} {% else %}
+              {{ tournament.start_time|date:"d/m/Y" }} - {{ tournament.end_time|date:"d/m/Y" }}
+              {% endif %} <br>
               Time: {{ tournament.start_time|date:"H:i" }} - {{ tournament.end_time|date:"H:i" }}
             </p>
           </div>
@@ -74,7 +84,8 @@
           <div class="item-button">
             <div class="center-scale">
               <span class="scale button">
-                <a href="accounts/members" class="moody" target="_self">Learn more</a>
+                <a href="accounts/members" class="moody" target="_self"
+                  style="color:var(--text-strong); text-decoration: none;">Learn more</a>
               </span>
             </div>
           </div>
@@ -84,33 +95,116 @@
           </span>
         </div>
         {% endfor %}
+        {% if tournaments|length == 0 %}
+        <h2 style="text-align: center;">No upcoming tournaments.</h2>
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
 <div class="sep-line"></div>
 <h1>Documents</h1>
-<div class="carousel-container card bg">
+<h2 style="padding-bottom:0;margin-bottom:0;">Legal documents</h2>
+<div class="split-container card bg">
+  <div class="center">
+    <h2>Dutch</h2>
+    <h4 style="padding-top:0;margin-top:0;">(official documents)</h4>
+    <div class="documents card bg-light">
+      {% with documents=documents|dictsort:"priority" %}
+      {% for document in documents %}
+      {% if document.type == "legal" and document.language == "nl" %}
+      <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
+      {% else %}
+      {% endif %}
+      {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+  <div class="center">
+    <h2>English</h2>
+    <h4 style="padding-top:0;margin-top:0;">(translations, informative)</h4>
+    <div class="documents card bg-light">
+      {% with documents=documents|dictsortreversed:"priority" %}
+      {% for document in documents %}
+      {% if document.type == "legal" and document.language == "en" %}
+      <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
+      {% else %}
+      {% endif %}
+      {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+
+<h2>Explanation of legal documents:</h2>
+<p style="font: var(--p1);">
+  The legal documents of Messed Up are available in both Dutch and English. The Dutch versions are the official
+  documents,
+  while the English versions are translations for the convenience of our non-Dutch speaking members. In case of any
+  discrepancies between the Dutch and English versions, the Dutch version shall prevail.
+  <br><br>
+  The Statutes (statuten) are the official basis of the association. It describes how the association is structured,
+  with members, donors and board, their role in the association and with what responsibilities they are charged. It also
+  states how a general members assembly (GMA) is proclaimed, how documents can be changed and which documents must be
+  presented when. The statutes can only be changed by a civil-law notary.
+  <br><br>
+  The Internal rules and regulations (Huisreglement, HR) is a supplement to the statutes of the association. Wherein the
+  rights and obligations of members and the duties and responsibilities of the board are described in more detail. The
+  course of events during the GMA is also explained. TheInternal rules and regulationscan be changed by a majority of
+  votes at a GA.
+  <br><br>
+  The Competition, Tournament, Training Regulations (Competitie-, toernooi- en trainingreglement, CTTR) is a supplement
+  to the statutes of the association. It contains all rules concerning the practice of sport, ie participation in
+  competition and tournaments, the role of trainers, coaches and suppliers and the tasks of the Technical Committee.
+  <br><br>
+  The Work actions regulations (Werkactiesysteem reglement, WR) is a supplement to the HR of the associations concerning
+  the working actions of messed up in relation to the work actions fine.
+  <br><br>
+  The Statutes addendum (Statuten addendum) is a document to keep track of the changes we should make next time the time
+  and money is invested to change the statutes of Messed Up.
+</p>
+
+
+<div class="split-container card bg">
   <div class="center">
     <h2>GMA Documents</h2>
     <div class="document card bg-light">
-      {% for document in gma_documents %}
-      <h4>{{ document.title }}</h4>
-      <p style="font: var(--p1);">{{ document.description }}</p>
-      <a href="{{ document.file.url }}" target="_blank" class="moody">View Document</a>
+      {% with documents=documents|dictsortreversed:"created" %}
+      {% for document in documents %}
+      {% if document.type != "gma" %}
+      {% else %}
+      <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
+      {% endif %}
       {% endfor %}
+      {% endwith %}
     </div>
   </div>
   <div class="center">
     <h2>Other Documents</h2>
     <div class="document card bg-light">
-      {% for document in other_documents %}
-      <h4>{{ document.title }}</h4>
-      <p style="font: var(--p1);">{{ document.description }}</p>
-      <a href="{{ document.file.url }}" target="_blank" class="moody">View Document</a>
+      {% with documents=documents|dictsortreversed:"title" %}
+      {% for document in documents %}
+      {% if document.type != "other" %}
+      {% else %}
+      <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
+      {% endif %}
       {% endfor %}
+      {% endwith %}
     </div>
   </div>
 </div>
-<script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
-{% endblock %}
+<div class="sep-line"></div>
+<h1>Useful links</h1>
+<div class="split-container">
+  <div class="center">
+    <a class="member-link" style="grid-column-start: 1"
+      href="https://calendar.google.com/calendar/u/0/embed?src=0f10d1gdgdmh0id4gdi5ncvo4s@group.calendar.google.com&ctz=Europe/Amsterdam&pli=1"
+      target="_blank">Google Calendar</a><br>
+  </div>
+  <div class="center">
+    <a class="member-link" style="grid-column-start: 2"
+      href="https://docs.google.com/spreadsheets/d/1UwOmlI3NB6rPlSWjW414A1vC2aHjzF6fno3rsK5OMmI/edit?gid=960054743#gid=960054743"
+      target="_blank">Yearplan Messed Up</a>
+  </div>
+  <script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+  {% endblock %}

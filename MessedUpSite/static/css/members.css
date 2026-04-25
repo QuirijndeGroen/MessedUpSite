@@ -1,10 +1,16 @@
-.carousel-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 1fr;
-    justify-content: center;
-    margin: 20px;
+.split-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  justify-content: center;
+  gap: 0;
+  margin: 20px;
+  padding-bottom: 20px;
+}
+
+.center {
+  align-items: baseline;
 }
 
 @media only screen and (max-width: 600px) {
@@ -18,7 +24,22 @@
 }
 
 .item-info {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-link {
+  font: var(--h3);
+  padding: 10px;
+  text-align: center;
+  align-items: baseline;
+}
+
+.documents {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  font: var(--h4);
 }

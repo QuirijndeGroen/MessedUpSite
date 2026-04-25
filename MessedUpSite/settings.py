@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "MessedUpSite.apps.accounts",
     "rest_framework",
+    "MessedUpSite.apps.accounts",
     "MessedUpSite.apps.activities",
     "MessedUpSite.apps.documents",
 ]

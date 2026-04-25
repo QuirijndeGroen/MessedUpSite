@@ -1,13 +1,16 @@
 from django.db import models
+from .fields import DocumentLanguageField, DocumentTypeField
 
 
 class Document(models.Model):
     """Represents a document."""
 
     created = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=100, blank=True, default="")
+    type = DocumentTypeField(default="other")
+    language = DocumentLanguageField(default="en")
+    title = models.CharField(max_length=100, blank=True, default="", unique=True)
     file = models.FileField(upload_to="MessedUpSite/static/documents")
-    type = models.CharField(max_length=50, blank=True, default="")
+    priority = models.IntegerField(default=0)
 
     class Meta:
         ordering = ["created"]
