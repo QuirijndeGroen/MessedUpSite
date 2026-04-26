@@ -1,5 +1,5 @@
 .split-container {
-  width: 100%;
+  width: 90%;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
@@ -11,6 +11,9 @@
 
 .center {
   align-items: baseline;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -39,7 +42,6 @@
 .documents {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   padding: 20px;
   font: var(--h4);
 }

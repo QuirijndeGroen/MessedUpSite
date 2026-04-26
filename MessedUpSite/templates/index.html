@@ -79,9 +79,12 @@
             <div class="item-info">
                 <p style="margin:0">
                     Location: {{ next_activity.location }} <br>
-                    Date: {% if next_activity.start_time.date == next_activity.end_time.date %}{{
-                    next_activity.start_time|date:"d/m/Y" }} {% else %} {{ next_activity.start_time|date:"d/m/Y" }} - {{
-                    next_activity.end_time|date:"d/m/Y" }} {% endif %} <br>
+                    Date: 
+                    {% if next_activity.start_time.date == next_activity.end_time.date %}
+                    {{ next_activity.start_time|date:"d/m/Y" }} 
+                    {% else %} 
+                    {{ next_activity.start_time|date:"d/m/Y" }} - {{ next_activity.end_time|date:"d/m/Y" }} 
+                    {% endif %} <br>
                     Time: {{ next_activity.start_time|date:"H:i" }} - {{ next_activity.end_time|date:"H:i" }}
                 </p>
             </div>

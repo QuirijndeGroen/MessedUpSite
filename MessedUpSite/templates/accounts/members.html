@@ -108,27 +108,26 @@
 <div class="split-container card bg">
   <div class="center">
     <h2>Dutch</h2>
-    <h4 style="padding-top:0;margin-top:0;">(official documents)</h4>
+    <h4 style="padding-top:0;margin-top:0;color:var(--text-mid);">(official documents)</h4>
     <div class="documents card bg-light">
       {% with documents=documents|dictsort:"priority" %}
       {% for document in documents %}
       {% if document.type == "legal" and document.language == "nl" %}
       <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
-      {% else %}
       {% endif %}
       {% endfor %}
       {% endwith %}
     </div>
   </div>
+
   <div class="center">
     <h2>English</h2>
-    <h4 style="padding-top:0;margin-top:0;">(translations, informative)</h4>
+    <h4 style="padding-top:0;margin-top:0;color:var(--text-mid);">(translations, informative)</h4>
     <div class="documents card bg-light">
-      {% with documents=documents|dictsortreversed:"priority" %}
+      {% with documents=documents|dictsort:"priority" %}
       {% for document in documents %}
       {% if document.type == "legal" and document.language == "en" %}
       <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
-      {% else %}
       {% endif %}
       {% endfor %}
       {% endwith %}
@@ -168,11 +167,10 @@
 <div class="split-container card bg">
   <div class="center">
     <h2>GMA Documents</h2>
-    <div class="document card bg-light">
+    <div class="documents card bg-light">
       {% with documents=documents|dictsortreversed:"created" %}
       {% for document in documents %}
-      {% if document.type != "gma" %}
-      {% else %}
+      {% if document.type == "gma" %}
       <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
       {% endif %}
       {% endfor %}
@@ -181,11 +179,10 @@
   </div>
   <div class="center">
     <h2>Other Documents</h2>
-    <div class="document card bg-light">
+    <div class="documents card bg-light">
       {% with documents=documents|dictsortreversed:"title" %}
       {% for document in documents %}
-      {% if document.type != "other" %}
-      {% else %}
+      {% if document.type == "other" %}
       <a href="{{ document.file.url }}" target="_blank">{{ document.title }}</a>
       {% endif %}
       {% endfor %}
@@ -199,12 +196,13 @@
   <div class="center">
     <a class="member-link" style="grid-column-start: 1"
       href="https://calendar.google.com/calendar/u/0/embed?src=0f10d1gdgdmh0id4gdi5ncvo4s@group.calendar.google.com&ctz=Europe/Amsterdam&pli=1"
-      target="_blank">Google Calendar</a><br>
+      target="_blank">Google Calendar</a>
   </div>
   <div class="center">
     <a class="member-link" style="grid-column-start: 2"
       href="https://docs.google.com/spreadsheets/d/1UwOmlI3NB6rPlSWjW414A1vC2aHjzF6fno3rsK5OMmI/edit?gid=960054743#gid=960054743"
       target="_blank">Yearplan Messed Up</a>
   </div>
-  <script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
-  {% endblock %}
+</div>
+<script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+{% endblock %}

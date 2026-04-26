@@ -195,5 +195,5 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
 
 # Custom ignores - These are folders used to store user-uploaded files.
-static/documents/
-static/activity_images/
+/MessedUpSite/static/documents/
+/MessedUpSite/static/activity_images/
