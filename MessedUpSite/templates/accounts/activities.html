@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Activities{% endblock %}
+
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "css/activities.css" %}">
+{% endblock %}
+
+{% block content %}
+  <h1>Activities</h1>
+  <div class="button-container">
+    <div class="button scale">
+      <label for="toggle_all" class="container moody">All
+        <input type="radio" id="toggle_all" name="activity_type" value="all" checked="checked"/>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+
+    <div class="button scale">
+      <label for="toggle_activities" class="container moody">Activities
+        <input type="radio" id="toggle_activities" name="activity_type" value="activity"/>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="button scale">
+      <label for="toggle_tournaments" class="container moody">Tournaments
+        <input type="radio" id="toggle_tournaments" name="activity_type" value="tournament"/>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <ul class="card-list">
+    {% for activity in activities %}
+    <div class="card item img-side bg" title="{{ activity.type }}">
+      <div class="item-text">
+        <h2>{{ activity.title }}</h2>
+        <p style="font: var(--p1);">
+            {{ activity.description }}
+        </p>
+      </div>
+      <div class="item-info">
+        <p style="margin:0">
+            Location: {{ activity.location }} <br>
+            Date: 
+            {% if activity.start_time.date == activity.end_time.date %}
+            {{ activity.start_time|date:"d/m/Y" }} 
+            {% else %} 
+            {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }} 
+            {% endif %} <br>
+            Time: {{ activity.start_time|date:"H:i" }} - {{ activity.end_time|date:"H:i" }}
+        </p>
+      </div>
+    
+      <div class="item-button">
+        <div class="center-scale">
+          <span class="scale button">
+            <a href="accounts/members" class="moody" target="_self"
+                style="color:var(--text-strong); text-decoration: none;">Learn more</a>
+          </span>
+        </div>
+      </div>
+    
+      <span class="center item-image">
+        <img src={{ activity.image.url }} alt="Activity Image">
+      </span>
+    </div>
+
+    {% empty %}
+
+    <div class="item-text">
+      <h1>Members</h1>
+      <h2>No upcoming activities</h2>
+      <p style="font: var(--p1);">
+          There are currently no upcoming activities. Check back later for updates!
+      </p>
+    </div>
+    {% endfor %}
+  </ul>
+  <script rel="text/javascript" src="{% static "js/activities-filter.js" %}" defer></script>
+{% endblock %}

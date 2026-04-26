@@ -68,7 +68,7 @@
     padding-bottom: 8px;
   }
 
-  .img-top .item-info {
+  .img-side .item-info {
     grid-row-start: 2;
     grid-column-start: 1;
   }
@@ -97,7 +97,7 @@
     padding-bottom: 8px;
   }
 
-  .img-top .item-info {
+  .img-side .item-info {
     grid-row-start: 3;
   }
 }

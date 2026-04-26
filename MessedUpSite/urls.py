@@ -8,6 +8,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("MessedUpSite.apps.public.urls")),
     path("accounts/", include("MessedUpSite.apps.accounts.urls")),
+    path("accounts/", include("MessedUpSite.apps.activities.urls")),
 ]
 
 if settings.DEBUG:

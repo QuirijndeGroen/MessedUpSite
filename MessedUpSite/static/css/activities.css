@@ -1,0 +1,160 @@
+@import 'styles.css';
+
+
+.button-container {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 90%;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: none;
+  z-index: -1;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: var(--primary);
+}
+
+label {
+  text-align: center;
+}
+
+/*===============================
+               Items
+  ===============================*/
+
+.item {
+  width: 100%;
+  display: grid;
+  margin: 25px 0;
+}
+
+.item-image {
+  overflow: hidden;
+}
+
+.item-image img {
+  width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.item-text {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 20px;
+}
+
+.item-button {
+  padding-right: 20px;
+  justify-self: end;
+  align-self: end;
+}
+
+.item-info {
+  padding: 0 20px;
+  align-self: end;
+}
+
+/*========== Side Image =========*/
+
+@media only screen and (min-width: 600px) {
+  .img-side {
+    grid-template-columns: 30vh auto auto;
+    grid-template-rows: auto auto 20px;
+    /* 74 px for button */
+  }
+
+  .img-side .item-image {
+    border-radius: 20px 0 0 20px;
+    max-width: 60vh;
+    grid-row: span 3 / span 3;
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
+
+  .img-side .item-text {
+    grid-column-start: 2;
+    grid-column: span 2 / span 2;
+    grid-row-start: 1;
+  }
+
+  .img-side .item-button {
+    grid-column-start: 3;
+    grid-row-start: 2;
+    padding-bottom: 8px;
+  }
+
+  .img-side .item-info {
+    grid-row-start: 2;
+    grid-column-start: 2;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .img-side {
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto 74px;
+  }
+
+  .img-side .item-image {
+    border-radius: 20px;
+    grid-row-start: 1;
+    grid-column: span 2 / span 2;
+  }
+
+  .img-side .item-text {
+    grid-row-start: 2;
+    grid-column: span 2 / span 2;
+  }
+
+  .img-side .item-button {
+    grid-row-start: 3;
+
+    padding-bottom: 8px;
+  }
+
+  .img-side .item-info {
+    grid-row-start: 3;
+  }
+}
