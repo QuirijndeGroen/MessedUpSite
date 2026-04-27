@@ -1,16 +1,14 @@
 from django.db import models
-from MessedUpSite.apps.accounts.models import UserPersona
+from rest_framework.fields import BooleanField, DateTimeField, EmailField, IntegerField
+from MessedUpSite.apps.activities.models import Activity
 
 
-class ActivityTypeField(models.CharField):
-    CHOICES = (
-        ("activity", "Activity"),
-        ("tournament", "Tournament"),
-        ("poll", "Poll"),
+class ActivityField(models.IntegerField):
+    CHOICES: tuple[tuple[int, str], ...] = tuple(
+        [(activity.id, activity.title) for activity in Activity.objects.all()]
     )
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("max_length", 50)
         kwargs.setdefault("choices", self.CHOICES)
         super().__init__(*args, **kwargs)
 
@@ -20,17 +18,19 @@ class ActivityTypeField(models.CharField):
         return name, path, args, kwargs
 
 
-class OrganizerField(models.CharField):
-    CHOICES = tuple(
-        [
-            (persona.normalized_name, persona.name)
-            for persona in UserPersona.objects.all()
-        ]
+class QuestionField(models.CharField):
+    CHOICES = (
+        ("char", "Short Text"),
+        ("text", "Long Text"),
+        ("datetime", "Date & Time"),
+        ("bool", "True/False"),
+        ("int", "Number"),
+        ("email", "Email"),
     )
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("max_length", 50)
         kwargs.setdefault("choices", self.CHOICES)
+        kwargs.setdefault("max_length", 20)
         super().__init__(*args, **kwargs)
 
     def deconstruct(self):
