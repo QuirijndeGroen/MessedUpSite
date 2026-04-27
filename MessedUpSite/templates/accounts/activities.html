@@ -30,6 +30,11 @@
       </label>
     </div>
   </div>
+
+  <div class="search">
+    <input type="text" id="search_input" placeholder="Search events..." class="search-field" maxlength="30" />
+  </div>
+
   <ul class="card-list">
     {% for activity in activities %}
     <div class="card item img-side bg" title="{{ activity.type }}">

@@ -8,7 +8,9 @@ class Activity(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     type = ActivityTypeField()
     image = models.ImageField(
-        blank=True, default="", upload_to="MessedUpSite/static/activity_images"
+        blank=True,
+        default="/MessedUpSite/static/assets/Images/Logo Light.png",
+        upload_to="MessedUpSite/static/activity_images",
     )
     title = models.CharField(max_length=100, blank=True, default="")
     description = models.TextField()

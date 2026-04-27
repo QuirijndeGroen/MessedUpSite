@@ -14,6 +14,20 @@ function FilterActivities() {
       });
     });
   });
+
+  document.getElementById("search_input").addEventListener("input", (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    const activityCards = document.querySelectorAll(".card.item");
+
+    activityCards.forEach((card) => {
+      const cardText = card.textContent.toLowerCase();
+      if (cardText.includes(searchTerm)) {
+        card.style.display = "grid";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
 }
 
 FilterActivities();
