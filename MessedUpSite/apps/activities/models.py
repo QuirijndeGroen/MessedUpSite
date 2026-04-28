@@ -1,5 +1,5 @@
 from django.db import models
-from .fields import ActivityTypeField, OrganizerField
+from .fields import ActivityTypeField
 
 
 class Activity(models.Model):
@@ -18,9 +18,12 @@ class Activity(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     location = models.CharField(max_length=100)
-    organizer = (
-        OrganizerField()
-    )  # author = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    organizer = models.ForeignKey(
+        "accounts.UserPersona",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     is_active = models.BooleanField(default=True)
 
     class Meta:

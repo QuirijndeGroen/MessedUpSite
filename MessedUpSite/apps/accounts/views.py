@@ -13,13 +13,25 @@ def ProfileView(request: HttpRequest):
 
 @login_required(login_url="/accounts/login/")
 def MembersView(request: HttpRequest):
-    activities = Activity.objects.filter(is_active=True, type="activity").order_by(
-        "start_time"
-    )
-    tournaments = Activity.objects.filter(is_active=True, type="tournament").order_by(
-        "start_time"
-    )
-    documents = Document.objects.all().order_by("created")
+    try:
+        activities = Activity.objects.filter(is_active=True, type="activity").order_by(
+            "start_time"
+        )
+    except Activity.DoesNotExist:
+        activities = None
+
+    try:
+        tournaments = Activity.objects.filter(
+            is_active=True, type="tournament"
+        ).order_by("start_time")
+    except Activity.DoesNotExist:
+        tournaments = None
+
+    try:
+        documents = Document.objects.all().order_by("created")
+    except:
+        documents = None
+
     return render(
         request,
         "accounts/members.html",

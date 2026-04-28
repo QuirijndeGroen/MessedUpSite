@@ -1,5 +1,4 @@
 from django.db import models
-from MessedUpSite.apps.accounts.models import UserPersona
 
 
 class ActivityTypeField(models.CharField):
@@ -7,25 +6,6 @@ class ActivityTypeField(models.CharField):
         ("activity", "Activity"),
         ("tournament", "Tournament"),
         ("poll", "Poll"),
-    )
-
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("max_length", 50)
-        kwargs.setdefault("choices", self.CHOICES)
-        super().__init__(*args, **kwargs)
-
-    def deconstruct(self):
-        name, path, args, kwargs = super().deconstruct()
-        kwargs["choices"] = self.CHOICES
-        return name, path, args, kwargs
-
-
-class OrganizerField(models.CharField):
-    CHOICES = tuple(
-        [
-            (persona.normalized_name, persona.name)
-            for persona in UserPersona.objects.all()
-        ]
     )
 
     def __init__(self, *args, **kwargs):
