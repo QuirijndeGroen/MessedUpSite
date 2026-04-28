@@ -1,5 +1,4 @@
 from django.db import models
-from MessedUpSite.apps.accounts.models import UserPersona
 
 
 class ActivityTypeField(models.CharField):
@@ -21,19 +20,28 @@ class ActivityTypeField(models.CharField):
 
 
 class OrganizerField(models.CharField):
-    CHOICES = tuple(
-        [
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("max_length", 50)
+        kwargs.setdefault("choices", [])
+        super().__init__(*args, **kwargs)
+
+    @staticmethod
+    def get_persona_choices():
+        from MessedUpSite.apps.accounts.models import UserPersona
+
+        return [
             (persona.normalized_name, persona.name)
             for persona in UserPersona.objects.all()
         ]
-    )
 
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("max_length", 50)
-        kwargs.setdefault("choices", self.CHOICES)
-        super().__init__(*args, **kwargs)
+    def formfield(self, **kwargs):
+        defaults = {
+            "choices": self.get_persona_choices(),
+        }
+        defaults.update(kwargs)
+        return super().formfield(**defaults)
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
-        kwargs["choices"] = self.CHOICES
+        kwargs.pop("choices", None)
         return name, path, args, kwargs
