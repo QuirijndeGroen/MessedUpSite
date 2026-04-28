@@ -1,20 +1,25 @@
 from django.db import models
-from .fields import ActivityField, QuestionField
-from MessedUpSite.apps.activities.models import Activity
+from .fields import QuestionField
 
 
 class RegistrationList(models.Model):
     """Represents an activity that users can participate in."""
 
     created = models.DateTimeField(auto_now_add=True)
-    linked_activity = ActivityField()
+    linked_activity = models.ForeignKey(
+        "activities.Activity",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     description = models.TextField()
     deadline = models.DateTimeField()
 
     def __str__(self):
-        return (
-            Activity.objects.get(id=self.linked_activity).title + " Registration List"
-        )
+        activity = self.linked_activity
+        if activity is None:
+            return "Unlinked Registration List"
+        return f"{activity.title} Registration List"
 
 
 class Question(models.Model):
