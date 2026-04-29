@@ -1,0 +1,105 @@
+@import 'styles.css';
+
+.question-block {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding:0 20px;
+}
+
+
+.input {
+  width: 30%;
+  margin: 20px;
+  border:none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+
+.input:hover, .awnser:focus {
+  border: none;
+}
+
+.input-container {
+  width: 80%;
+}
+
+.awnser-field, .awnser-field:focus, .awnser-field:checked, .awnser-field:active, .awnser-field:autofill, 
+.awnser-field:-webkit-autofill, .awnser-field:-webkit-autofill:focus, .awnser-field:-webkit-autofill:active, 
+.awnser-field:-webkit-autofill:checked {
+  height: 1.5rem;
+  color: var(--text-strong);
+  background-color: var(--bg-light);
+  border-radius: 20px;
+  font: var(--h4);
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+}
+
+
+.question {
+  font: var(--h4);
+  color: var(--text-strong);
+}
+
+
+
+
+/* Customize the label (the container) */
+.bool-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* Hide the browser's default checkbox */
+.bool-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.bool-checkmark {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #eee;
+  text-align: center;
+  padding: 12px 0;
+}
+
+/* When the checkbox is checked, add a green background */
+.bool-container input:checked ~ .bool-checkmark {
+  display: block;
+  background-color: var(--primary);
+}
+
+.bool-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+label {
+  text-align: center;
+  color: var(--text-strong);
+}

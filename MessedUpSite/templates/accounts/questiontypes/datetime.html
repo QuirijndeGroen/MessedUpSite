@@ -1,0 +1,14 @@
+{% load static %}
+
+<div class="question-block">
+  <p class="question">{{ question.question }}</p>
+  <div class="input">
+    <div class="input-container">
+      <input type="date" id="datetime_input" class="awnser-field" required=question.mandatory />
+      <input type="time" name="time" id="datetime_input" placeholder="hrs:mins" class="awnser-field" required=question.mandatory />
+    </div>
+    {% if question.mandatory %}
+    <p class="mandatory">(mandatory)</p>
+    {% endif %}
+  </div>
+</div>

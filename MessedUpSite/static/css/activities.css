@@ -48,7 +48,7 @@
   z-index: -1;
 }
 
-/* When the checkbox is checked, add a blue background */
+/* When the checkbox is checked, add a green background */
 .container input:checked ~ .checkmark {
   background-color: var(--primary);
 }
@@ -82,6 +82,14 @@ label {
   border: none;
 }
 
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 25px 0;
+  overflow: hidden;
+}
+
 /*===============================
                Items
   ===============================*/
@@ -89,7 +97,7 @@ label {
 .item {
   width: 100%;
   display: grid;
-  margin: 25px 0;
+  margin: 0;
 }
 
 .item-image {
@@ -130,7 +138,6 @@ label {
   }
 
   .img-side .item-image {
-    border-radius: 20px 0 0 20px;
     max-width: 60vh;
     grid-row: span 3 / span 3;
     grid-column-start: 1;
@@ -162,7 +169,6 @@ label {
   }
 
   .img-side .item-image {
-    border-radius: 20px;
     grid-row-start: 1;
     grid-column: span 2 / span 2;
   }
@@ -181,4 +187,19 @@ label {
   .img-side .item-info {
     grid-row-start: 3;
   }
+}
+
+
+
+.registrationlists {
+  padding-bottom: 50px;
+}
+
+
+.registrationlist-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 20px;
 }

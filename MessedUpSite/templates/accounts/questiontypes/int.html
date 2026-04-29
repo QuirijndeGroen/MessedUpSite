@@ -1,0 +1,9 @@
+<div class="question-block">
+  <p class="question">{{ question.question }}</p>
+  <div class="input">
+    <input type="number" id="text_input" class="input-container awnser-field" maxlength="30" placeholder="..." required=question.mandatory />
+    {% if question.mandatory %}
+    <p class="mandatory">(mandatory)</p>
+    {% endif %}
+  </div>
+</div>
