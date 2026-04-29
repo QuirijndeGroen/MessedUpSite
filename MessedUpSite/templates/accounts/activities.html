@@ -39,8 +39,8 @@
 
   <ul class="card-list">
     {% for activity in activities %}
-    <div class="card bg">
-      <div class="item img-side" title="{{ activity.type }}">
+    <div class="card bg activity" title="{{ activity.type }}" id="{{ activity.id }}">
+      <div class="item img-side">
         <div class="item-text">
           <h2>{{ activity.title }}</h2>
           <p style="font: var(--p1);">
@@ -62,10 +62,9 @@
       
         <div class="item-button">
           <div class="center-scale">
-            <span class="scale button">
-              <a href="accounts/members" class="moody" target="_self"
-                  style="color:var(--text-strong); text-decoration: none;">Register</a>
-            </span>
+            <div class="scale button">
+              <button type="button" class="expand-button moody" style="color:var(--text-strong);">Register!</button>
+            </div>
           </div>
         </div>
       
@@ -74,11 +73,14 @@
         </span>
       </div>
 
-      <div class="sep-line"></div>
-
       {% for registrationlist in activity.registrationlists.all %}
 
-      <div class="registrationlists">
+      <div id="{{ registrationlist.id }}" class="registrationlists">
+        
+        <div class="center">
+          <div class="sep-line"></div>
+        </div>
+        
         <div class="registrationlist-text">
           <p>{{ registrationlist.description }}</p>
           <div class="center">
@@ -97,27 +99,26 @@
 
         </div>
 
-        <div class="center">
-          <span class="scale button">
-            <a href="accounts/members" class="moody" target="_self"
-                style="color:var(--text-strong); text-decoration: none;">Colapse</a>
-          </span>
+        <div class="center button">
+          <button type="button" class="collapse-button moody" style="color:var(--text-strong);">Collapse</button>
         </div>
 
       </div>
 
       {% endfor %}
-
-      {% empty %}
-
-      <div class="item-text center">
-        <h2>No upcoming activities</h2>
-        <p style="font: var(--p1);">
-            There are currently no upcoming activities. Check back later for updates!
-        </p>
-      </div>
-      {% endfor %}
     </div>
+
+    {% empty %}
+
+    <div class="card item-text center">
+      <h2>No upcoming activities</h2>
+      <p style="font: var(--p1);">
+          There are currently no upcoming activities. Check back later for updates!
+      </p>
+    </div>
+
+    {% endfor %}
   </ul>
   <script rel="text/javascript" src="{% static "js/activities-filter.js" %}" defer></script>
+  <script rel="text/javascript" src="{% static "js/OpenCloseRegistrationlist.js" %}" defer></script>
 {% endblock %}

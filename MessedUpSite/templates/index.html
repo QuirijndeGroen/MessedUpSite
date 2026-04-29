@@ -92,7 +92,8 @@
             <div class="item-button">
                 <div class="center-scale">
                     <span class="scale button">
-                        <a href="accounts/members" class="moody" target="_self"
+                        {% url 'activities' as activities_url %}
+                        <a href="{{ activities_url }}#{{ next_activity.id }}" class="moody" target="_self"
                             style="color:var(--text-strong); text-decoration: none;">Learn more</a>
                     </span>
                 </div>

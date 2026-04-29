@@ -39,7 +39,8 @@
           <div class="item-button">
             <div class="center-scale">
               <span class="scale button">
-                <a href="accounts/members" class="moody" target="_self"
+              {% url 'activities' as activities_url %}
+                <a href="{{ activities_url }}#{{ activity.id }}" class="moody" target="_self"
                   style="color:var(--text-strong); text-decoration: none;">Learn more</a>
               </span>
             </div>
@@ -84,7 +85,8 @@
           <div class="item-button">
             <div class="center-scale">
               <span class="scale button">
-                <a href="accounts/members" class="moody" target="_self"
+                {% url 'activities' as activities_url %}
+                <a href="{{ activities_url }}#{{ tournament.id }}" class="moody" target="_self"
                   style="color:var(--text-strong); text-decoration: none;">Learn more</a>
               </span>
             </div>
@@ -104,7 +106,8 @@
 </div>
 
 <div class="scale button" style="margin-bottom: 30px;">
-  <a href="/accounts/activities/" class="moody" target="_self"
+  {% url 'activities' as activities_url %}
+  <a href="{{ activities_url }}" class="moody" target="_self"
     style="color:var(--text-strong); text-decoration: none; display: block; text-align: center; margin-top: 16px;">See a list of all
     activities and tournaments</a>
 </div>
