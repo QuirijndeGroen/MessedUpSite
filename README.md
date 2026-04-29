@@ -32,11 +32,7 @@ cd MessedUpSite
 
 ```bash
 make build #only for first time users
-```
-
-Somewhere in the future hopefully the migrationfiles are not saved to github, for now skip this step. (Although it shouldn't break the install)
-```bash
-make build #only for first time users
+make make-migrations
 ```
 
 ```bash
