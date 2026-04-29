@@ -11,6 +11,7 @@ urlpatterns = [
     path("", include("MessedUpSite.apps.public.urls")),
     path("accounts/", include("MessedUpSite.apps.accounts.urls")),
     path("accounts/", include("MessedUpSite.apps.activities.urls")),
+    path("accounts/", include("MessedUpSite.apps.registrationlists.urls")),
 ]
 
 if settings.DEBUG:

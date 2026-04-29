@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Registration Responses - {{ registrationlist }}{% endblock %}
+
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "css/activities.css" %}">
+<link rel="stylesheet" href="{% static "css/registration_responses.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="center">
+  <h1>Registration Responses</h1>
+  <h2>{{ registrationlist }}</h2>
+  <p>{{ registrationlist.description }}</p>
+
+  <a href="{% url 'activities' %}" class="back-link">&larr; Back to Activities</a>
+
+  {% if response_data %}
+  <table class="responses-table">
+      <thead>
+          <tr>
+              <th>User</th>
+              <th>Registration Date</th>
+              {% for question in questions %}
+              <th>{{ question.question }}{% if question.mandatory %}*{% endif %}</th>
+              {% endfor %}
+          </tr>
+      </thead>
+      <tbody>
+          {% for response in response_data %}
+          <tr>
+              <td>{{ response.user.get_full_name|default:response.user.username }}</td>
+              <td>{{ response.date_registered|date:"M d, Y H:i" }}</td>
+              {% for answer in response.answers %}
+              <td>{{ answer }}</td>
+              {% endfor %}
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  <p><em>* Required questions</em></p>
+  {% else %}
+  <p>No responses yet.</p>
+</div>
+{% endif %}
+{% endblock %}

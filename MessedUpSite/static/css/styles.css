@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5, h6 {
 .sep-line{
   align-self: center;
   max-width: var(--site-width);
-  width: 90%;
+  width: 100%;
   border: var(--sep-line);
 }
 

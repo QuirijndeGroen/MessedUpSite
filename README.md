@@ -10,7 +10,7 @@ An in-depth paragraph about your project and overview of use.
 
 ### Dependencies
 
-The website is Django based. For the database postgresql is used and for hosting kerbernetes is used.
+The website is Django based. For the database postgresql is used.
 The website is dockerized and thus imports the nessisary packages. The website can atleast be made with Docker 29.3.1.
 
 Software to install:
@@ -34,8 +34,13 @@ cd MessedUpSite
 make build #only for first time users
 ```
 
+Somewhere in the future hopefully the migrationfiles are not saved to github, for now skip this step. (Although it shouldn't break the install)
 ```bash
-make compose-start
+make build #only for first time users
+```
+
+```bash
+make start
 ```
 
 From here search
@@ -46,17 +51,4 @@ http://localhost:9000/
 
 on your preferred browser.
 
-If the setup doesn't work the first time, rerun compose-start. This should fix the sites' database problems.
-
-## Authors
-
-Quirijn de Groen
-
-## Version History
-
-- 0.1.1
-  - Refectored carousels and styles
-  - Added automatic carousel rotation
-  - Added some new example images
-- 0.1.0
-  - Initial Release
+If the setup doesn't work the first time, rerun make start. This should fix the sites' database problems.

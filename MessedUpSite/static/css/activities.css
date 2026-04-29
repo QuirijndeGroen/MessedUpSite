@@ -195,7 +195,7 @@ label {
   display: none;
   opacity: 0;
   transition: var(--transition);
-  padding-bottom: 50px;
+  margin-bottom: 32px;
 }
 
 .registrationlists.show {

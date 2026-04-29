@@ -14,7 +14,7 @@
 <div class="split-container card bg">
   <div class="center">
     <h1>Activities</h1>
-    <div class="carousel"">
+    <div class="carousel">
       <div class="item-container">
         {% for activity in activities %}
         <div class="item card bg-light img-top">
@@ -105,11 +105,10 @@
   </div>
 </div>
 
-<div class="scale button" style="margin-bottom: 30px;">
+<div style="margin: 20px 0 50px 0;">
   {% url 'activities' as activities_url %}
-  <a href="{{ activities_url }}" class="moody" target="_self"
-    style="color:var(--text-strong); text-decoration: none; display: block; text-align: center; margin-top: 16px;">See a list of all
-    activities and tournaments</a>
+  <a href="{{ activities_url }}" class="member-link" target="_self">See a list of all
+    activities and tournaments &rarr; </a>
 </div>
 
 <div class="sep-line"></div>

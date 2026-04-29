@@ -1,6 +1,7 @@
 from django.db import models
 from .fields import QuestionField
-
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 class RegistrationList(models.Model):
     """Represents an activity that users can participate in."""
@@ -20,7 +21,8 @@ class RegistrationList(models.Model):
         activity = self.linked_activity
         if activity is None:
             return "Unlinked Registration List"
-        return f"{activity.title} Registration List"
+        self.title = f"{activity.title} Registration List"
+        return self.title
 
 
 class Question(models.Model):
@@ -33,3 +35,42 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class RegistrationResponses(models.Model):
+
+    linked_registrationlist = models.ForeignKey(
+        "registrationlists.RegistrationList",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="responses",
+    )
+    date_registered = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        registrationlist = self.linked_registrationlist
+        if registrationlist is None:
+            return "Unlinked Registration List"
+        return f"{registrationlist.__str__()} Responses"
+
+
+class RegistrationAnswer(models.Model):
+    response = models.ForeignKey(
+        RegistrationResponses,
+        on_delete=models.CASCADE,
+        related_name="answers",
+    )
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name="answers",
+    )
+    answer = models.TextField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ("response", "question")
+
+    def __str__(self):
+        return f"Answer to '{self.question}'"
