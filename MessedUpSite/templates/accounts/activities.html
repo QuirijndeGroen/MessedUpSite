@@ -37,14 +37,6 @@
     <input type="text" id="search_input" placeholder="Search events..." class="search-field" maxlength="30" />
   </div>
 
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li class="{{ message.tags }}">{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-
   <ul class="card-list">
     {% for activity in activities %}
     <div class="card bg activity" title="{{ activity.type }}" id="{{ activity.id }}">
@@ -113,7 +105,7 @@
         {% else %}
 
         <div class="registration-form-container">
-          <form method="post" action="{% url 'registrationlists:registration_submit' registrationlist.id %}">
+          <form method="post" action="{% url 'registrationlists:registration_submit' registrationlist.id %}" class="register-form" data-registrationlist-id="{{ registrationlist.id }}">
             {% csrf_token %}
             <div>
               {% for field in registrationlist.form %}
@@ -172,5 +164,6 @@
   </ul>
   <script rel="text/javascript" src="{% static "js/activities-filter.js" %}" defer></script>
   <script rel="text/javascript" src="{% static "js/OpenCloseRegistrationlist.js" %}" defer></script>
+  <script rel="text/javascript" src="{% static "js/register.js" %}" defer></script>
   <script rel="text/javascript" src="{% static "js/deregister.js" %}" defer></script>
 {% endblock %}

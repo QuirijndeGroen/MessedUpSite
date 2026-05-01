@@ -46,27 +46,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Helper function to show messages
-function showMessage(message, type) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${type}`;
-    messageDiv.textContent = message;
-    messageDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        background-color: ${type === 'success' ? '#28a745' : '#dc3545'};
-        color: white;
-        border-radius: 5px;
-        z-index: 1000;
-        animation: slideIn 0.3s ease-in;
-    `;
-    
-    document.body.appendChild(messageDiv);
-    
-    // Remove message after 3 seconds
-    setTimeout(() => {
-        messageDiv.remove();
-    }, 3000);
+// Helper function to show messages (shared with register.js)
+// Only define if not already defined by register.js
+if (typeof showMessage === 'undefined') {
+    window.showMessage = function(message, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        messageDiv.textContent = message;
+        messageDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: ${type === 'success' ? '#28a745' : '#dc3545'};
+            color: white;
+            border-radius: 5px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-in;
+        `;
+        
+        document.body.appendChild(messageDiv);
+        
+        // Remove message after 3 seconds
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    };
 }
+

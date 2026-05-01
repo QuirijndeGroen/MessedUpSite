@@ -18,7 +18,10 @@ def submit_registration(request, pk):
 
     form = RegistrationForm(request.POST, questions=questions)
     if not form.is_valid():
-        messages.error(request, "Please correct the registration form and submit again.")
+        error_msg = "Please correct the registration form and submit again."
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'message': error_msg}, status=400)
+        messages.error(request, error_msg)
         return redirect("activities")
 
     response = RegistrationResponses.objects.create(
@@ -45,6 +48,12 @@ def submit_registration(request, pk):
             answer=answer_text,
         )
 
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'message': 'Your registration was submitted successfully.'
+        })
+    
     messages.success(request, "Your registration was submitted successfully.")
     return redirect("activities")
 
