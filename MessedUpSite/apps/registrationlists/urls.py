@@ -14,4 +14,9 @@ urlpatterns = [
         views.view_responses,
         name="view_responses",
     ),
+    path(
+        "registrationlists/<int:pk>/deregister/",
+        views.deregister,
+        name="deregister",
+    ),
 ]

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from MessedUpSite.apps.registrationlists.forms import RegistrationForm
+from MessedUpSite.apps.registrationlists.models import RegistrationResponses
 from .models import Activity
 
 
@@ -12,9 +13,15 @@ def ActivitiesView(request: HttpRequest):
         "registrationlists__questions"
     )
 
+    # Get all registration responses for the current user
+    user_registrations = RegistrationResponses.objects.filter(user=request.user).values_list(
+        'linked_registrationlist_id', flat=True
+    )
+
     for activity in activities:
         for registrationlist in activity.registrationlists.all():
             registrationlist.form = RegistrationForm(questions=registrationlist.questions.all())
+            registrationlist.user_registered = registrationlist.id in user_registrations
 
     return render(
         request,

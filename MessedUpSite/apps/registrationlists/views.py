@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponseForbidden, JsonResponse
+from django.views.decorators.http import require_http_methods
 
 from .forms import RegistrationForm
 from .models import RegistrationAnswer, RegistrationList, RegistrationResponses
@@ -45,6 +47,33 @@ def submit_registration(request, pk):
 
     messages.success(request, "Your registration was submitted successfully.")
     return redirect("activities")
+
+
+@login_required(login_url="/accounts/login/")
+@require_http_methods(["POST"])
+def deregister(request, pk):
+    """Handle user deregistration from a registration list."""
+    registrationlist = get_object_or_404(RegistrationList, pk=pk)
+    
+    # Find the user's registration
+    registration = RegistrationResponses.objects.filter(
+        linked_registrationlist=registrationlist,
+        user=request.user
+    ).first()
+    
+    if registration is None:
+        return JsonResponse({
+            'success': False,
+            'message': 'You are not registered for this activity.'
+        }, status=400)
+    
+    # Delete the registration and all associated answers
+    registration.delete()
+    
+    return JsonResponse({
+        'success': True,
+        'message': 'You have been successfully deregistered from this activity.'
+    })
 
 
 @login_required(login_url="/accounts/login/")
