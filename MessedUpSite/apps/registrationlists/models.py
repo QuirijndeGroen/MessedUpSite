@@ -16,6 +16,7 @@ class RegistrationList(models.Model):
     )
     description = models.TextField()
     deadline = models.DateTimeField()
+    registrations_public = models.BooleanField(default=True)
 
     def __str__(self):
         activity = self.linked_activity

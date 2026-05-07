@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponseForbidden, JsonResponse
+from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 
 from .forms import RegistrationForm
 from .models import RegistrationAnswer, RegistrationList, RegistrationResponses
@@ -91,22 +91,36 @@ def view_responses(request, pk):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
     
     group = registrationlist.linked_activity.organizer
+    board = False
+    for group in request.user.groups.all():
+        if group.name == 'Board':
+            board = True
 
-    if group in request.user.groups.all():
+    response_list = []
+    if group in request.user.groups.all() or request.user.is_superuser or board:
 
         # Get all responses with their answers
-        responses = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()
+        responses_table = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()
 
     else:
         # Get the response from the user with their answers
-        responses = registrationlist.responses.select_related('user').prefetch_related('answers__question').filter(user=request.user)
+        responses_table = registrationlist.responses.select_related('user').prefetch_related('answers__question').filter(user=request.user)
         
+        if registrationlist.registrations_public:
+            responses_list = registrationlist.responses.all()
+
+            for response in responses_list:
+                response_list.append({
+                    'user': response.user,
+                    'date_registered': response.date_registered,
+                })
+
     # Get all questions for the header
     questions = list(registrationlist.questions.order_by('id'))
         
     # Create a matrix: user -> question -> answer
-    response_data = []
-    for response in responses:
+    response_table = []
+    for response in responses_table:
         # Create a dictionary of question_id -> answer
         user_answers = {answer.question_id: answer.answer for answer in response.answers.all()}
         
@@ -115,16 +129,17 @@ def view_responses(request, pk):
         for question in questions:
             answers_list.append(user_answers.get(question.id, "-"))
         
-        response_data.append({
+        response_table.append({
             'user': response.user,
             'date_registered': response.date_registered,
             'answers': answers_list  # Now a list instead of dict
         })
-    
+
     context = {
         'registrationlist': registrationlist,
         'questions': questions,
-        'response_data': response_data,
+        'response_table': response_table,
+        'response_list': response_list
     }
     
     return render(request, 'accounts/registration_responses.html', context)

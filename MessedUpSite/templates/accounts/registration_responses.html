@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Registration Responses - {{ registrationlist }}{% endblock %}
+{% block title %}Registrations - {{ registrationlist }}{% endblock %}
 
 {% load static %}
 {% block extra_head %}
@@ -10,13 +10,13 @@
 
 {% block content %}
 <div class="center">
-  <h1>Registration Responses</h1>
+  <h1>Registrations</h1>
   <h2>{{ registrationlist }}</h2>
   <p>{{ registrationlist.description }}</p>
 
   <a href="{% url 'activities' %}" class="back-link">&larr; Back to Activities</a>
 
-  {% if response_data %}
+  {% if response_table %}
   <table class="responses-table">
       <thead>
           <tr>
@@ -28,7 +28,7 @@
           </tr>
       </thead>
       <tbody>
-          {% for response in response_data %}
+          {% for response in response_table %}
           <tr>
               <td>{{ response.user.get_full_name|default:response.user.username }}</td>
               <td>{{ response.date_registered|date:"M d, Y H:i" }}</td>
@@ -39,10 +39,32 @@
           {% endfor %}
       </tbody>
   </table>
-
   <p><em>* Required questions</em></p>
+  {% endif %}
+
+  {% if response_list %}
+  <table class="responses-table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Registration Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for response in response_list %}
+        <tr>
+            <td>{{ response.user.get_full_name|default:response.user.username }}</td>
+            <td>{{ response.date_registered|date:"M d, Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if response_list or response_table %}
   {% else %}
-  <p>No responses yet.</p>
+  <p>No registrations yet.</p>
+  {% endif %}
 </div>
-{% endif %}
+
 {% endblock %}
