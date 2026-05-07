@@ -19,7 +19,7 @@ class Activity(models.Model):
     end_time = models.DateTimeField()
     location = models.CharField(max_length=100)
     organizer = models.ForeignKey(
-        "accounts.UserPersona",
+        "auth.Group",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

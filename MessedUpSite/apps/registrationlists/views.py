@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.models import User, Group
 
 from .forms import RegistrationForm
 from .models import RegistrationAnswer, RegistrationList, RegistrationResponses
@@ -89,12 +90,20 @@ def deregister(request, pk):
 def view_responses(request, pk):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
     
-    # Get all responses with their answers
-    responses = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()
-    
+    group = registrationlist.linked_activity.organizer
+
+    if group in request.user.groups.all():
+
+        # Get all responses with their answers
+        responses = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()
+
+    else:
+        # Get the response from the user with their answers
+        responses = registrationlist.responses.select_related('user').prefetch_related('answers__question').filter(user=request.user)
+        
     # Get all questions for the header
     questions = list(registrationlist.questions.order_by('id'))
-    
+        
     # Create a matrix: user -> question -> answer
     response_data = []
     for response in responses:
