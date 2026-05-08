@@ -1,16 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.models import Group
 
 from .forms import RegistrationForm
 from .models import RegistrationAnswer, RegistrationList, RegistrationResponses
 
 
-@login_required(login_url="/accounts/login/")
-def submit_registration(request, pk):
+def submit_registration(request: HttpRequest, pk: int):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
     questions = registrationlist.questions.all()
 
@@ -25,10 +23,16 @@ def submit_registration(request, pk):
         messages.error(request, error_msg)
         return redirect("activities")
 
-    response = RegistrationResponses.objects.create(
-        linked_registrationlist=registrationlist,
-        user=request.user,
-    )
+    if request.user is not None:
+        response = RegistrationResponses.objects.create(
+            linked_registrationlist=registrationlist,
+            user=request.user,
+        )
+    else:
+                response = RegistrationResponses.objects.create(
+            linked_registrationlist=registrationlist,
+
+        )
 
     for question in questions:
         field_name = f"question_{question.id}"
@@ -61,7 +65,7 @@ def submit_registration(request, pk):
 
 @login_required(login_url="/accounts/login/")
 @require_http_methods(["POST"])
-def deregister(request, pk):
+def deregister(request: HttpRequest, pk: int):
     """Handle user deregistration from a registration list."""
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
     
@@ -87,7 +91,7 @@ def deregister(request, pk):
 
 
 @login_required(login_url="/accounts/login/")
-def view_responses(request, pk):
+def view_responses(request: HttpRequest, pk: int):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
     
     group = registrationlist.linked_activity.organizer
@@ -143,3 +147,5 @@ def view_responses(request, pk):
     }
     
     return render(request, 'accounts/registration_responses.html', context)
+
+

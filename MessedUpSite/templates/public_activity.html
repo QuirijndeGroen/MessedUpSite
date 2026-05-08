@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Activity{% endblock %}
+
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "css/activities.css" %}">
+<link rel="stylesheet" href="{% static "css/questions.css" %}">
+{% endblock %}
+
+{% block content %}
+  <ul class="card-list">
+    <div class="card bg activity" title="{{ activity.type }}" id="{{ activity.id }}">
+      <div class="item img-side">
+        <div class="item-text">
+          <h2>{{ activity.title }}</h2>
+          <p style="font: var(--p1);">
+              {{ activity.description }}
+          </p>
+        </div>
+        <div class="item-info">
+          <p style="margin:0">
+              Location: {{ activity.location }} <br>
+              Date: 
+              {% if activity.start_time.date == activity.end_time.date %}
+              {{ activity.start_time|date:"d/m/Y" }} 
+              {% else %} 
+              {{ activity.start_time|date:"d/m/Y" }} - {{ activity.end_time|date:"d/m/Y" }} 
+              {% endif %} <br>
+              Time: {{ activity.start_time|date:"H:i" }} - {{ activity.end_time|date:"H:i" }}
+          </p>
+        </div>
+      
+        <div class="item-button">
+          <div class="center-scale">
+            <div class="scale button">
+              <button type="button" class="expand-button moody" style="color:var(--text-strong);">Open Registration List</button>
+            </div>
+          </div>
+        </div>
+      
+        <span class="center item-image">
+          <img src={{ activity.image.url }} alt="Activity Image">
+        </span>
+      </div>
+
+      {% for registrationlist in activity.registrationlists.all %}
+
+      <div id="{{ registrationlist.id }}" class="registrationlists">
+        
+        <div class="center">
+          <div class="sep-line"></div>
+        </div>
+        
+        <div class="registrationlist-text">
+          <p>{{ registrationlist.description }}</p>
+          <div class="center">
+            <p style="text-align:center;"> Registration ends at:<br>{{ registrationlist.deadline|date:'d-m-Y H:i' }}</p>
+          </div>
+        </div>
+
+        {% if registrationlist.user_registered %}
+
+          <div class="user-registered">
+            <div class="center">
+              <p style="margin-bottom: 15px;"><strong>You are registered for this activity</strong></p>
+              <form method="post" action="{% url 'registrationlists:deregister' registrationlist.id %}" class="deregister-form" data-registrationlist-id="{{ registrationlist.id }}" style="display:inline;">
+                {% csrf_token %}
+                <div class="center scale button">
+                  <button type="submit" class="moody-fill" style="color:var(--text-strong);">Deregister</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        {% else %}
+
+        <div class="registration-form-container">
+          <form method="post" action="{% url 'registrationlists:registration_submit' registrationlist.id %}" class="register-form" data-registrationlist-id="{{ registrationlist.id }}">
+            {% csrf_token %}
+            <div>
+              {% for field in registrationlist.form %}
+              <div class="question-block">
+                <p class="question">{{ field.label }}</p>
+                <div class="input">{{ field }}</div>
+                {% if field.errors %}
+                <div class="field-errors">{{ field.errors }}</div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help-text">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.required %}
+                <p class="mandatory">(mandatory)</p>
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="center scale button">
+              <button type="submit" class="moody-fill" style="color:var(--text-strong);">Register</button>
+            </div>
+
+          </form>
+        </div>
+
+        {% endif %}
+
+        <div class="center" style="margin:15px;">
+          <a href="{% url 'registrationlists:view_responses' registrationlist.id %}" style="font:var(--h4);">View Responses ({{ registrationlist.responses.count }})</a>
+        </div>
+
+        <div class="center" style="margin:25px 0;">
+          <div class="sep-line"></div>
+        </div>
+
+        <div class="center scale button">
+          <button type="button" class="collapse-button moody" style="color:var(--text-strong);">Collapse</button>
+        </div>
+
+      </div>
+
+      {% endfor %}
+    </div>  
+  </ul>
+  <script rel="text/javascript" src="{% static "js/OpenCloseRegistrationlist.js" %}" defer></script>
+  <script rel="text/javascript" src="{% static "js/register.js" %}" defer></script>
+  <script rel="text/javascript" src="{% static "js/deregister.js" %}" defer></script>
+{% endblock %}

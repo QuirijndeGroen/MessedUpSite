@@ -9,4 +9,9 @@ urlpatterns = [
     path("floorball/", views.floorball, name="floorball"),
     path("association/", views.association, name="association"),
     path("contact/", views.contact, name="contact"),
+    path(
+        "publicactivity/<int:pk>/",
+        views.public_activity,
+        name="public_activity",
+    ),
 ]

@@ -24,6 +24,7 @@ class Activity(models.Model):
         null=True,
         blank=True,
     )
+    public=models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
     class Meta:

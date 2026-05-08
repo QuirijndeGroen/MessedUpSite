@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from MessedUpSite.apps.documents.models import Document
 from MessedUpSite.apps.activities.models import Activity
 
