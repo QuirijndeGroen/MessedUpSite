@@ -30,7 +30,12 @@
       <tbody>
           {% for response in response_table %}
           <tr>
-              <td>{{ response.user.get_full_name|default:response.user.username }}</td>
+              <td> {% if response.user %}
+                {{ response.user.get_full_name|default:response.user.username }}
+              {% else %}
+                Unkown
+              {% endif %}
+              </td>
               <td>{{ response.date_registered|date:"M d, Y H:i" }}</td>
               {% for answer in response.answers %}
               <td>{{ answer }}</td>

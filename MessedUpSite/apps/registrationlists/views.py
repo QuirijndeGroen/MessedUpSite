@@ -23,15 +23,22 @@ def submit_registration(request: HttpRequest, pk: int):
         messages.error(request, error_msg)
         return redirect("activities")
 
-    if request.user is not None:
+    if registrationlist.registrations_public:
+        response = RegistrationResponses.objects.create(
+            linked_registrationlist=registrationlist,
+            user=request.user if request.user.is_authenticated else None,
+        )
+    else:
+        if not request.user.is_authenticated:
+            error_msg = "You must be logged in to register for this activity."
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': error_msg}, status=403)
+            messages.error(request, error_msg)
+            return redirect('activities')
+
         response = RegistrationResponses.objects.create(
             linked_registrationlist=registrationlist,
             user=request.user,
-        )
-    else:
-                response = RegistrationResponses.objects.create(
-            linked_registrationlist=registrationlist,
-
         )
 
     for question in questions:

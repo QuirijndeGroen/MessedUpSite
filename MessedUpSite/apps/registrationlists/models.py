@@ -50,7 +50,7 @@ class RegistrationResponses(models.Model):
         related_name="responses",
     )
     date_registered = models.DateTimeField(default=timezone.now)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         registrationlist = self.linked_registrationlist
