@@ -94,7 +94,7 @@
 
           <div class="user-registered">
             <div class="center">
-              <p style="margin-bottom: 15px;"><strong>You are registered for this activity<br>
+              <p style="margin-bottom: 15px; text-align: center;"><strong>You are registered for this activity<br>
                 Registration for this activity has closed</strong></p>
             </div>
           </div>
@@ -103,7 +103,7 @@
 
           <div class="registration-form-container">
             <div class="center">
-              <p style="margin-bottom: 15px;"><strong>Registration for this activity has closed</strong></p>
+              <p style="margin-bottom: 15px; text-align: center;"><strong>Registration for this activity has closed</strong></p>
             </div>
           </div>
 
@@ -119,7 +119,7 @@
                 <form method="post" action="{% url 'registrationlists:deregister' registrationlist.id %}" class="deregister-form" data-registrationlist-id="{{ registrationlist.id }}" style="display:inline;">
                   {% csrf_token %}
                   <div class="center scale button">
-                    <button type="submit" class="moody-fill" style="color:var(--text-strong);">Deregister</button>
+                    <button type="submit" class="moody-fill" style="color:var(--text-strong);">Unregister</button>
                   </div>
                 </form>
               </div>
