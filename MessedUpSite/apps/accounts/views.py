@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from MessedUpSite.apps.documents.models import Document
 from MessedUpSite.apps.activities.models import Activity
 
@@ -14,16 +14,18 @@ def ProfileView(request: HttpRequest):
 @login_required(login_url="/accounts/login/")
 def MembersView(request: HttpRequest):
     try:
-        activities = Activity.objects.filter(is_active=True, type="activity").order_by(
+        activities = Activity.objects.filter(type="activity").order_by(
             "start_time"
         )
+        activities = [activity for activity in activities if activity.is_active]
     except Activity.DoesNotExist:
         activities = None
 
     try:
-        tournaments = Activity.objects.filter(
-            is_active=True, type="tournament"
-        ).order_by("start_time")
+        tournaments = Activity.objects.filter(type="tournament").order_by(
+            "start_time"
+            )
+        tournaments = [tournament for tournament in tournaments if tournament.is_active]
     except Activity.DoesNotExist:
         tournaments = None
 

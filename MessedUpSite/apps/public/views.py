@@ -6,9 +6,16 @@ from MessedUpSite.apps.registrationlists.forms import RegistrationForm
 
 def index(request: HttpRequest) -> HttpResponse:
     try:
-        next_activity = (
-            Activity.objects.filter(is_active=True).order_by("start_time").first()
+        next_activities = (
+            Activity.objects.all().order_by("start_time")
         )
+        next_activities = [activity for activity in next_activities if activity.is_active]
+        next_public_activities = [activity for activity in next_activities if activity.public]
+        if len(next_public_activities) > 0:
+            next_activity = next_public_activities[0]
+        else:
+            next_activity = next_activities[0] if len(next_activities) > 0 else None
+            
         return render(request, "index.html", {"next_activity": next_activity})
     except Activity.DoesNotExist:
         return render(request, "index.html", {"next_activity": None})
@@ -26,7 +33,8 @@ def contact(request: HttpRequest) -> HttpResponse:
     return render(request, "contact.html")
 
 def public_activity(request: HttpRequest, pk: int):
-    activity = Activity.objects.filter(is_active=True, id=pk, public=True).prefetch_related("registrationlists__questions")
+    activity = Activity.objects.filter(id=pk, public=True).prefetch_related("registrationlists__questions")
+    activity = [activity for activity in activity if activity.is_active]
 
     for activity in activity:
         for registrationlist in activity.registrationlists.all():

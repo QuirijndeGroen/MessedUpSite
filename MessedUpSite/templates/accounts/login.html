@@ -18,8 +18,14 @@
         {% elif field.id_for_label == "id_password" %}
         <input class="form-control" id="password" maxlength="30" name="{{ field.html_name }}" type="password" placeholder="Password" /> 
         {% endif %}
-        {{ field.errors }}
         {% endfor %}
+        {% if form.non_field_errors %}
+          <ul class='form-errors'>
+            {% for error in form.non_field_errors %}
+              <li class='form-errors'>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </div>
       <div class="right button">
         <input type="submit" class="scale moody" style="color:var(--text-strong); text-decoration: none;" value="login" />
@@ -29,4 +35,5 @@
   </form>
   <div class="fill"></div>
 </div>
+
 {% endblock %}

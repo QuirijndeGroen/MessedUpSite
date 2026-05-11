@@ -45,3 +45,11 @@
 .login-form:hover, .login-form:focus {
   border: none;
 }
+
+
+.form-errors {
+  color: var(--text-strong);
+  font: var(--h4);
+  margin: 10px;
+  text-wrap: balance;
+}
