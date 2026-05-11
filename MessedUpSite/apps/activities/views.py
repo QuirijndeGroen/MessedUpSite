@@ -9,9 +9,10 @@ from .models import Activity
 
 @login_required(login_url="/accounts/login/")
 def ActivitiesView(request: HttpRequest):
-    activities = Activity.objects.filter(is_active=True).order_by("start_time").prefetch_related(
+    activities = Activity.objects.order_by("start_time").prefetch_related(
         "registrationlists__questions"
     )
+    activities = [activity for activity in activities if activity.is_active]
 
     # Get all registration responses for the current user
     user_registrations = RegistrationResponses.objects.filter(user=request.user).values_list(

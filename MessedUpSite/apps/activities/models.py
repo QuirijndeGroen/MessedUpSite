@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from .fields import ActivityTypeField
 
@@ -25,10 +27,13 @@ class Activity(models.Model):
         blank=True,
     )
     public=models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+
+    @property
+    def is_active(self):
+        return date.today() <= self.end_time.date()
 
     class Meta:
-        ordering = ["created", "is_active"]
+        ordering = ["start_time"]
 
     def __str__(self):
         return self.title

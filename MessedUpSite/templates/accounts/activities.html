@@ -88,49 +88,74 @@
           </div>
         </div>
 
-        {% if registrationlist.user_registered %}
+        {% if registrationlist.closed %}
+
+          {% if registrationlist.user_registered %}
 
           <div class="user-registered">
             <div class="center">
-              <p style="margin-bottom: 15px;"><strong>You are registered for this activity</strong></p>
-              <form method="post" action="{% url 'registrationlists:deregister' registrationlist.id %}" class="deregister-form" data-registrationlist-id="{{ registrationlist.id }}" style="display:inline;">
-                {% csrf_token %}
-                <div class="center scale button">
-                  <button type="submit" class="moody-fill" style="color:var(--text-strong);">Deregister</button>
-                </div>
-              </form>
+              <p style="margin-bottom: 15px;"><strong>You are registered for this activity<br>
+                Registration for this activity has closed</strong></p>
             </div>
           </div>
 
+          {% else %}
+
+          <div class="registration-form-container">
+            <div class="center">
+              <p style="margin-bottom: 15px;"><strong>Registration for this activity has closed</strong></p>
+            </div>
+          </div>
+
+          {% endif %}
+
         {% else %}
 
-        <div class="registration-form-container">
-          <form method="post" action="{% url 'registrationlists:registration_submit' registrationlist.id %}" class="register-form" data-registrationlist-id="{{ registrationlist.id }}">
-            {% csrf_token %}
-            <div>
-              {% for field in registrationlist.form %}
-              <div class="question-block">
-                <p class="question">{{ field.label }}</p>
-                <div class="input">{{ field }}</div>
-                {% if field.errors %}
-                <div class="field-errors">{{ field.errors }}</div>
-                {% endif %}
-                {% if field.help_text %}
-                <p class="help-text">{{ field.help_text }}</p>
-                {% endif %}
-                {% if field.required %}
-                <p class="mandatory">(mandatory)</p>
-                {% endif %}
+          {% if registrationlist.user_registered %}
+
+            <div class="user-registered">
+              <div class="center">
+                <p style="margin-bottom: 15px;"><strong>You are registered for this activity</strong></p>
+                <form method="post" action="{% url 'registrationlists:deregister' registrationlist.id %}" class="deregister-form" data-registrationlist-id="{{ registrationlist.id }}" style="display:inline;">
+                  {% csrf_token %}
+                  <div class="center scale button">
+                    <button type="submit" class="moody-fill" style="color:var(--text-strong);">Deregister</button>
+                  </div>
+                </form>
               </div>
-              {% endfor %}
             </div>
 
-            <div class="center scale button">
-              <button type="submit" class="moody-fill" style="color:var(--text-strong);">Register</button>
-            </div>
+          {% else %}
 
-          </form>
-        </div>
+          <div class="registration-form-container">
+            <form method="post" action="{% url 'registrationlists:registration_submit' registrationlist.id %}" class="register-form" data-registrationlist-id="{{ registrationlist.id }}">
+              {% csrf_token %}
+              <div>
+                {% for field in registrationlist.form %}
+                <div class="question-block">
+                  <p class="question">{{ field.label }}</p>
+                  <div class="input">{{ field }}</div>
+                  {% if field.errors %}
+                  <div class="field-errors">{{ field.errors }}</div>
+                  {% endif %}
+                  {% if field.help_text %}
+                  <p class="help-text">{{ field.help_text }}</p>
+                  {% endif %}
+                  {% if field.required %}
+                  <p class="mandatory">(mandatory)</p>
+                  {% endif %}
+                </div>
+                {% endfor %}
+              </div>
+
+              <div class="center scale button">
+                <button type="submit" class="moody-fill" style="color:var(--text-strong);">Register</button>
+              </div>
+
+            </form>
+          </div>
+
+          {% endif %}
 
         {% endif %}
 

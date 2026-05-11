@@ -1,9 +1,8 @@
-from queue import Empty
-
 from django.db import models
 from .fields import QuestionField
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import date
 
 class RegistrationList(models.Model):
     """Represents an activity that users can participate in."""
@@ -19,6 +18,10 @@ class RegistrationList(models.Model):
     description = models.TextField()
     deadline = models.DateTimeField()
     registrations_public = models.BooleanField(default=True)
+
+    @property
+    def closed(self):
+        return date.today() > self.deadline.date()
 
     def __str__(self):
         activity = self.linked_activity
