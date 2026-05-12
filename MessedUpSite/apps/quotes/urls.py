@@ -9,9 +9,4 @@ urlpatterns = [
         views.quote_list,
         name="quote_list",
     ),
-    path(
-        "newquote/",
-        views.newquote,
-        name="newquote",
-    ),
 ] 

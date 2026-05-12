@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Quotes{% endblock %}
+
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "css/quotes.css" %}">
+{% endblock %}
+
+{% block content %}
+  <h1>Quotes</h1>
+
+  <div class="search">
+    <input type="text" id="search_input" placeholder="Search quotes..." class="search-field" maxlength="30" />
+  </div>
+
+  <ul class="card-list">
+
+    {% for quote in quotes %}
+
+    <div class="card item bg quote">
+      <div class="item-text">
+        <h2 style="text-wrap: balance;">{{ quote.text }}</h2>
+        <p style="font: var(--p1); text-align: center; color: var(--text-strong);">
+            {{ quote.person }}
+        </p>
+      </div>
+    </div>
+
+    {% empty %}
+
+    <div class="card item-text center">
+      <h2>No quotes</h2>
+      <p style="font: var(--p1);">
+          Go yap more!
+      </p>
+    </div>
+
+    {% endfor %}
+
+  </ul>
+  <script rel="text/javascript" src="{% static "js/quotes-filter.js" %}" defer></script>
+{% endblock %}

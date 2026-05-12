@@ -213,5 +213,14 @@
       target="_blank">Yearplan Messed Up</a>
   </div>
 </div>
+
+<div class="sep-line"></div>
+
+<div class="center">
+  {% url 'newquote' as newquote_url %}
+  <a class="member-link" 
+    href="{{ newquote_url }}"
+    target="_blank">Add a quote!</a>
+</div>
 <script rel="text/javascript" src="{% static 'js/carousel.js' %}"></script>
 {% endblock %}

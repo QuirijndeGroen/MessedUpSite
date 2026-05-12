@@ -31,6 +31,6 @@ def quote_list(request: HttpRequest):
 
     quotes = Quote.objects.all().order_by("-created") 
 
-    return render(request, "accounts/quotes.html", {
+    return render(request, "quotes.html", {
         "quotes": quotes
     })
