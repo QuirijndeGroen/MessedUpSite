@@ -1,12 +1,5 @@
 @import 'styles.css';
 
-.card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 90%;
-}
-
 .search {
   width: 30%;
   margin: 20px;
@@ -32,25 +25,19 @@
   border: none;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 25px;
-  overflow: hidden;
-}
+
 
 /*===============================
                Items
   ===============================*/
 
-.item {
+.quote {
   width: 100%;
   display: grid;
   margin: 0;
 }
 
-.item-text {
+.quote-text {
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -58,91 +45,38 @@
   text-align: center;
 }
 
-.item-info {
+.quote-info {
   padding: 0 20px;
   align-self: center;
 }
 
-/*========== Side Image =========*/
 
-@media only screen and (min-width: 600px) {
-  .img-side {
-    grid-template-columns: 30vh auto auto;
-    grid-template-rows: auto auto 20px;
-    /* 74 px for button */
+.quote-box {
+  width: 90%;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-width: 1400px) {
+  .quote-box {
+    position: relative;
   }
 
-  .img-side .item-image {
-    max-width: 60vh;
-    grid-row: span 3 / span 3;
-    grid-column-start: 1;
-    grid-row-start: 1;
-  }
-
-  .img-side .item-text {
-    grid-column-start: 2;
-    grid-column: span 2 / span 2;
-    grid-row-start: 1;
-  }
-
-  .img-side .item-button {
-    grid-column-start: 3;
-    grid-row-start: 2;
-    padding-bottom: 8px;
-  }
-
-  .img-side .item-info {
-    grid-row-start: 2;
-    grid-column-start: 2;
+  .sep-quote {
+    display: block;
   }
 }
 
-@media only screen and (max-width: 600px) {
-  .img-side {
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto 74px;
+@media only screen and (min-width: 1400px) {
+  .quote-box {
+    position: absolute;
+    right: 0%;
+    top: 25%;
+    width: calc((100% - var(--site-width)) / 2 - 40px);
+    transform: translateX(-20px);
   }
 
-  .img-side .item-image {
-    grid-row-start: 1;
-    grid-column: span 2 / span 2;
+  .sep-quote {
+    display: none;
   }
-
-  .img-side .item-text {
-    grid-row-start: 2;
-    grid-column: span 2 / span 2;
-  }
-
-  .img-side .item-button {
-    grid-row-start: 3;
-
-    padding-bottom: 8px;
-  }
-
-  .img-side .item-info {
-    grid-row-start: 3;
-  }
-}
-
-
-
-.registrationlists {
-  display: none;
-  opacity: 0;
-  transition: var(--transition);
-  margin-bottom: 32px;
-}
-
-.registrationlists.show {
-  display: block;
-  opacity: 1;
-}
-
-
-.registrationlist-text {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0 20px;
 }

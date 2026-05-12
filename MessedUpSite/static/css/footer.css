@@ -15,8 +15,7 @@
 }
 
 .footer-layout {
-  max-width: var(--site-width);
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: stretch;

@@ -18,8 +18,8 @@
 
     {% for quote in quotes %}
 
-    <div class="card item bg quote">
-      <div class="item-text">
+    <div class="card bg quote">
+      <div class="quote-text">
         <h2 style="text-wrap: balance;">{{ quote.text }}</h2>
         <p style="font: var(--p1); text-align: center; color: var(--text-strong);">
             {{ quote.person }}
@@ -29,7 +29,7 @@
 
     {% empty %}
 
-    <div class="card item-text center">
+    <div class="card quote-text center">
       <h2>No quotes</h2>
       <p style="font: var(--p1);">
           Go yap more!

@@ -1,0 +1,35 @@
+{% load static %}
+
+<head>
+  <link rel="stylesheet" href="{% static "css/quotes.css" %}">
+</head>
+
+
+<div class="sep-line sep-quote" style="margin: 30px 0;"></div>
+
+<ul class="quote-box">
+
+  {% if quote is not None %}
+
+  <div class="card bg quote">
+    <div class="quote-text">
+      <h2 style="text-wrap: balance;">{{ quote.text }}</h2>
+      <p style="font: var(--p1); text-align: center; color: var(--text-strong);">
+          {{ quote.person }}
+      </p>
+    </div>
+  </div>
+
+  {% else %}
+
+  <div class="card quote-text center">
+    <h2>No quotes</h2>
+    <p style="font: var(--p1);">
+        Go yap more!
+    </p>
+  </div>
+
+  {% endif %}
+  
+</ul>
+
