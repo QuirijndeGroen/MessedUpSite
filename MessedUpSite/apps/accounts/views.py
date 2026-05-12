@@ -2,6 +2,7 @@ from django.http import HttpRequest
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
 from MessedUpSite.apps.documents.models import Document
 from MessedUpSite.apps.activities.models import Activity
 

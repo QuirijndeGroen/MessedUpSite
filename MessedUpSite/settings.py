@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "MessedUpSite.apps.activities",
     "MessedUpSite.apps.documents",
     "MessedUpSite.apps.registrationlists",
+    "MessedUpSite.apps.quotes",
 ]
 
 MIDDLEWARE = [

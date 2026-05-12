@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %}Quote{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/newquote.css' %}" />
+{% endblock %} 
+
+{% block content %}
+<div id="quote-page" class="center">
+  <form role="form" class="center" method="post"> 
+    {% csrf_token %} 
+    <div class="center card bg">
+      <h2 class="center" style="margin-bottom: 0;">Submit Quote</h2>
+      <div class="center quote-form">
+        {% for field in form %}
+        {% if field.name == "text" %}
+        <input class="form-control" id="text" name="{{ form.text.html_name }}" type="text" placeholder="Quote" /> 
+        {% elif field.name == "person" %}
+        <input class="form-control" id="person" maxlength="50" name="{{ form.person.html_name }}" type="text" placeholder="Person" /> 
+        {% endif %}
+        {% endfor %}
+        {% if form.non_field_errors %}
+          <ul class='form-errors'>
+            {% for error in form.non_field_errors %}
+              <li class='form-errors'>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="right button">
+        <input type="submit" class="scale moody" style="color:var(--text-strong); text-decoration: none;" value="Submit Quote" />
+      </div>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+  </form>
+  <div class="fill"></div>
+</div>
+
+{% endblock %}
