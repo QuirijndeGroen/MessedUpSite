@@ -44,7 +44,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: none;
+  background-color: #00000000;
   z-index: -1;
 }
 

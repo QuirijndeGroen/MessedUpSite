@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "rest_framework",
     "MessedUpSite.apps.accounts",
     "MessedUpSite.apps.activities",
     "MessedUpSite.apps.documents",
@@ -116,6 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "accounts.MyUser"
+
 
 
 # Internationalization

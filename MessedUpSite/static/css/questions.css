@@ -16,7 +16,6 @@
 
 
 .input {
-  width: 30%;
   margin: 20px;
   border:none;
   display: flex;
@@ -26,7 +25,7 @@
   width: 90%;
 }
 
-.input:hover, .awnser:focus {
+.input:hover, .answer:focus {
   border: none;
 }
 
@@ -34,9 +33,9 @@
   width: 80%;
 }
 
-.awnser-field, .awnser-field:focus, .awnser-field:checked, .awnser-field:active, .awnser-field:autofill, 
-.awnser-field:-webkit-autofill, .awnser-field:-webkit-autofill:focus, .awnser-field:-webkit-autofill:active, 
-.awnser-field:-webkit-autofill:checked {
+.answer-field, .answer-field:focus, .answer-field:checked, .answer-field:active, .answer-field:autofill,
+.answer-field:-webkit-autofill, .answer-field:-webkit-autofill:focus, .answer-field:-webkit-autofill:active,
+.answer-field:-webkit-autofill:checked {
   height: 1.5rem;
   color: var(--text-strong);
   background-color: var(--bg-light);

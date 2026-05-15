@@ -9,6 +9,7 @@ urlpatterns = [
     path("profile/", views.ProfileView, name="profile"),
     path("members/", views.MembersView, name="members"),
     path("newquote/", newquote, name="newquote"),
+    path("addcontent/", views.AddContentView, name="addcontent"),
     # Authentication URLs
     path(
         "login/",

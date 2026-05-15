@@ -44,3 +44,19 @@ def MembersView(request: HttpRequest):
             "documents": documents,
         },
     )
+
+
+@login_required(login_url="/accounts/login/")
+def AddContentView(request: HttpRequest):
+
+    user_committees = request.user.committees.all()
+
+    for group in user_groups:
+        if "activities" in group.rights.all():
+            Can create activities and registrationlists.
+        if "documents" in group.rights.all():
+            Can create documents.
+        if "users" in group.rights.all():
+            Can create users.
+
+    return TemplateView.as_view(template_name="accounts/create.html")(request)
