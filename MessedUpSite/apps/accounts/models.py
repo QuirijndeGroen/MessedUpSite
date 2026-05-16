@@ -1,11 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
+from .fields import CommitteeRightsField
+
 
 
 class Committee(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
+    rights = CommitteeRightsField(default=None, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
@@ -40,7 +43,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username:str, password:str=None):
+    def create_superuser(self, username:str, password:str|None=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -68,7 +71,7 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    committees = models.ManyToManyField(Committee, blank=True)
+    committees = models.ManyToManyField(Committee, blank=True, related_name="committees")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

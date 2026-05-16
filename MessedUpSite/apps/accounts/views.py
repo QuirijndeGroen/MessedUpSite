@@ -45,31 +45,43 @@ def MembersView(request: HttpRequest):
 @login_required(login_url="/accounts/login/")
 def AddContentView(request: HttpRequest):
 
-    user_committees = request.user.committees.all()
+    user_rights = request.user.committees.values_list('name', flat=True).values_list("rights", flat=True)
 
-    user_rights = {}
-    for committee in user_committees:
-        if "Board" == committee:
-            user_rights += {"activities": "full", "documents": "full", "users": "full"}
+    if "Full" in user_rights:
+        activities = Activity.objects.all().order_by("start_time").prefetch_related(
+            "registrationlists__questions"
+        )
+        documents = Document.objects.all().order_by("title")
+    
+    elif request.user.committees.exists():
+        for committee in request.user.committees.values_list('name', flat=True):
+            committee_rights = committee.rights.all()
 
-        elif "Technical Committee" == committee:
-            user_rights += {"activities": "self", "documents": "full"}
+            if "Document & Activity" in committee_rights:
+                activities = Activity.objects.filter(organizer=committee).order_by("start_time").prefetch_related(
+                    "registrationlists__questions"
+                )
+                documents = Document.objects.all().order_by("title")
+                
+            elif "Activity" in committee_rights:
+                activities = Activity.objects.filter(organizer=committee).order_by("start_time").prefetch_related(
+                    "registrationlists__questions"
+                )
 
-        elif (
-            "Bar Committee" == committee
-            or "Promo" == committee
-            or "ISSTT Committee" == committee
-            or "First-year Committee" == committee
-            or "Weekend Committee" == committee
-        ):
-            user_rights += {"activities": "self"}
+                documents = None
+    
+    else:
+        activities = None
+        documents = None
 
-    activity_rights = user_rights.get("activities")
 
     return render(
-        request,
-        "accounts/add_content.html",
-        {
-            "rights": activity_rights,
+    request,
+    "accounts/add_content.html",
+    {
+        "activities": activities,
+        "documents": documents,
         },
     )
+
+
