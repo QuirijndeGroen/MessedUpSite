@@ -15,24 +15,20 @@ def ProfileView(request: HttpRequest):
 @login_required(login_url="/accounts/login/")
 def MembersView(request: HttpRequest):
     try:
-        activities = Activity.objects.filter(type="activity").order_by(
-            "start_time"
-        )
+        activities = Activity.objects.filter(type="activity").order_by("start_time")
         activities = [activity for activity in activities if activity.is_active]
     except Activity.DoesNotExist:
         activities = None
 
     try:
-        tournaments = Activity.objects.filter(type="tournament").order_by(
-            "start_time"
-            )
+        tournaments = Activity.objects.filter(type="tournament").order_by("start_time")
         tournaments = [tournament for tournament in tournaments if tournament.is_active]
     except Activity.DoesNotExist:
         tournaments = None
 
     try:
         documents = Document.objects.all().order_by("created")
-    except:
+    except Document.DoesNotExist:
         documents = None
 
     return render(
@@ -51,12 +47,29 @@ def AddContentView(request: HttpRequest):
 
     user_committees = request.user.committees.all()
 
-    for group in user_groups:
-        if "activities" in group.rights.all():
-            Can create activities and registrationlists.
-        if "documents" in group.rights.all():
-            Can create documents.
-        if "users" in group.rights.all():
-            Can create users.
+    user_rights = {}
+    for committee in user_committees:
+        if "Board" == committee:
+            user_rights += {"activities": "full", "documents": "full", "users": "full"}
 
-    return TemplateView.as_view(template_name="accounts/create.html")(request)
+        elif "Technical Committee" == committee:
+            user_rights += {"activities": "self", "documents": "full"}
+
+        elif (
+            "Bar Committee" == committee
+            or "Promo" == committee
+            or "ISSTT Committee" == committee
+            or "First-year Committee" == committee
+            or "Weekend Committee" == committee
+        ):
+            user_rights += {"activities": "self"}
+
+    activity_rights = user_rights.get("activities")
+
+    return render(
+        request,
+        "accounts/add_content.html",
+        {
+            "rights": activity_rights,
+        },
+    )

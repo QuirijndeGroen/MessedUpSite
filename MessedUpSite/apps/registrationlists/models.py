@@ -1,6 +1,6 @@
 from django.db import models
 from .fields import QuestionField
-from django.contrib.auth.models import User
+from MessedUpSite.apps.accounts.models import User
 from django.utils import timezone
 from datetime import date
 
