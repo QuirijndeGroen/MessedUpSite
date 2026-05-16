@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.postgres.fields import ArrayField
 
 from .fields import CommitteeField
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, committees, password=None):
+    def create_user(self, username:str, email:str, committees:ArrayField, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -14,24 +15,24 @@ class UserManager(BaseUserManager):
             raise ValueError("Users must have an email address")
 
         user = self.model(
-            username=self.username,
+            username=username,
             email=self.normalize_email(email),
-            committees=self.committees,
+            committees=committees,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, committees, password=None):
+    def create_superuser(self, username:str, password:str=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
-            username,
-            email,
-            committees=self.committees,
+            username=username,
+            email="admin@messedup.utwente.nl",
+            committees=ArrayField(models.CharField("Webcommittee")),
             password=password,
         )
         user.is_admin = True
@@ -63,13 +64,19 @@ class User(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         """Does the user have a specific permission?"""
-        # Simplest possible answer: No, never
-        return False
+        # If you are an admin, then yes
+        if self.is_admin:
+            return True
+        else:
+            return False
 
     def has_module_perms(self, app_label):
         """Does the user have permissions to view the app `app_label`?"""
-        # Simplest possible answer: No, never
-        return False
+        # If you are an admin, then yes
+        if self.is_admin:
+            return True
+        else:
+            return False
 
     @property
     def is_staff(self):

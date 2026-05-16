@@ -3,3 +3,6 @@ from django.apps import AppConfig
 
 class DocumentsConfig(AppConfig):
     name = "MessedUpSite.apps.documents"
+    label = "documents"
+    default_auto_field = "django.db.models.BigAutoField"
+    verbose_name = "Manage Documents"
