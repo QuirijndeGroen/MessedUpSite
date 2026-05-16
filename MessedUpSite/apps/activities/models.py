@@ -21,10 +21,11 @@ class Activity(models.Model):
     end_time = models.DateTimeField()
     location = models.CharField(max_length=100)
     organizer = models.ForeignKey(
-        "auth.Group",
+        "accounts.Committee",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name="organizer",
     )
     public=models.BooleanField(default=False)
 
@@ -34,6 +35,7 @@ class Activity(models.Model):
 
     class Meta:
         ordering = ["start_time"]
+        verbose_name_plural = "Activities"
 
     def __str__(self):
         return self.title

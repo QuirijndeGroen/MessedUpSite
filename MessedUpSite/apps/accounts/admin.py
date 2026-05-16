@@ -4,13 +4,20 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
+from django.forms import CheckboxSelectMultiple
+from django.db import models
 
-from .models import User
+
+from .models import Committee, User
 
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
@@ -56,7 +63,9 @@ class UserChangeForm(forms.ModelForm):
             "is_active",
             "is_admin"
         ]
-
+        widget = {
+            "committees": forms.CheckboxSelectMultiple(),
+        }
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -64,10 +73,13 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
     model = User
 
+    def get_committees(self, obj):
+        return "\n".join([c.name for c in obj.committees.all()])
+
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ["username", "email", "committees", "is_admin"]
+    list_display = ["username", "email", "get_committees", "is_admin"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["username", "email", "password"]}),
@@ -92,6 +104,7 @@ class UserAdmin(BaseUserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
+admin.site.register(Committee)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
