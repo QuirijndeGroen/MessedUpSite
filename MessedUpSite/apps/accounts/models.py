@@ -19,7 +19,7 @@ class Committee(models.Model):
     
 
 class UserManager(BaseUserManager):
-    def create_user(self, username:str, email:str, committees:list[str]|None, password=None):
+    def create_user(self, username:str, full_name:str, email:str, committees:list[str]|None, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -29,6 +29,7 @@ class UserManager(BaseUserManager):
 
         user = self.model(
             username=username,
+            full_name=full_name,
             email=self.normalize_email(email),
         )
         
@@ -43,13 +44,14 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username:str, password:str|None=None):
+    def create_superuser(self, username:str, full_name:str, password:str|None=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
             username=username,
+            full_name=full_name,
             email="admin@messedup.utwente.nl",
             committees=None,
             password=password
@@ -65,6 +67,11 @@ class User(AbstractBaseUser):
         verbose_name="user name",
         max_length=255,
         unique=True,
+    )
+    full_name = models.CharField(
+        verbose_name="full name",
+        max_length=255,
+        unique=False,
     )
     email = models.EmailField(
         verbose_name="email address",

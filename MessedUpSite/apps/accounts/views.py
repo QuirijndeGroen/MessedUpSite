@@ -5,11 +5,16 @@ from django.shortcuts import render
 
 from MessedUpSite.apps.documents.models import Document
 from MessedUpSite.apps.activities.models import Activity
+from .models import User
 
 
 @login_required(login_url="/accounts/login/")
 def ProfileView(request: HttpRequest):
-    return TemplateView.as_view(template_name="accounts/profile.html")(request)
+    
+    user = request.user
+    committees = user.committees.values_list('name', flat=True)
+
+    return render(request, "accounts/profile.html", {"user": user, "committees": committees})
 
 
 @login_required(login_url="/accounts/login/")
@@ -52,6 +57,8 @@ def AddContentView(request: HttpRequest):
             "registrationlists__questions"
         )
         documents = Document.objects.all().order_by("title")
+
+        users = User.objects.all().order_by("username")
     
     elif request.user.committees.exists():
         for committee in request.user.committees.values_list('name', flat=True):
@@ -62,6 +69,8 @@ def AddContentView(request: HttpRequest):
                     "registrationlists__questions"
                 )
                 documents = Document.objects.all().order_by("title")
+
+                users = None
                 
             elif "Activity" in committee_rights:
                 activities = Activity.objects.filter(organizer=committee).order_by("start_time").prefetch_related(
@@ -69,10 +78,12 @@ def AddContentView(request: HttpRequest):
                 )
 
                 documents = None
+                users = None
     
     else:
         activities = None
         documents = None
+        users = None
 
 
     return render(
@@ -81,6 +92,7 @@ def AddContentView(request: HttpRequest):
     {
         "activities": activities,
         "documents": documents,
+        "users": users,
         },
     )
 

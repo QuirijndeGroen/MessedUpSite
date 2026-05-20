@@ -5,9 +5,105 @@
 {% load static %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static "css/add_content.css" %}">
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
 {% endblock %}
 
 {% block content %}
 
+{% if activities %}
+<h2>Activities</h2>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Location</th>
+          <th>Organizer</th>
+          <th>Public</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for activity in activities %}
+      <tr>
+          <td>{{ activity.type }}</td>
+          <td><a href={{ activity.file }}>preview image</a></td>
+          <td>{{ activity.title }}</td>
+          <td>{{ activity.description }}</td>
+          <td>{{ activity.start_time|date:"d/m/Y H:i" }}</td>
+          <td>{{ activity.end_time|date:"d/m/Y H:i" }}</td>
+          <td>{{ activity.location }}</td>
+          <td>{{ activity.organizer }}</td>
+          <td>{{ activity.public }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% if documents %}
+<h2>Documents</h2>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Title</th>
+          <th>language</th>
+          <th>File</th>
+          <th>Priority</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for document in documents %}
+      <tr>
+          <td>{{ document.type }}</td>
+          <td>{{ document.title }}</td>
+          <td>{{ document.language }}</td>
+          <td><a href={{ document.file }}>preview file</a></td>
+          <td>{{ document.priority }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% if users %}
+<h2>Users</h2>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Username</th>
+          <th>Full Name</th>
+          <th>Email Address</th>
+          <th>Committees</th>
+          <th>Admin</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for user in users %}
+      <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            {% for committee in user.committees.all %}
+            {{ committee}};
+            {% endfor %}
+          </td>
+          <td>{{ user.is_admin }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
 
 {% endblock %}

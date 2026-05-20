@@ -1,31 +1,5 @@
 @import 'styles.css';
 
-.responses-table {
-    max-width: 100vw;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-.responses-table th,
-.responses-table td {
-  border: var(--border-card);
-  padding: 12px;
-    text-align: left;
-}
-
-.responses-table th {
-    background-color: var(--bg);
-    font-weight: bold;
-}
-
-.responses-table tr:nth-child(even) {
-    background-color: var(--bg);
-}
-
-.responses-table tr:hover {
-    background-color: var(--bg-light);
-}
-
 .back-link {
     margin-bottom: 20px;
     display: inline-block;
