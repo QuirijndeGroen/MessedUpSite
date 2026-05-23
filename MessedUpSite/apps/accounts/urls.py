@@ -25,6 +25,11 @@ urlpatterns = [
     path("user/add/", views.UserAddView, name="user-add"),
     path("user/<int:pk>/edit/", views.UserEditView, name="user-edit"),
     path("user/<int:pk>/delete/", views.UserDeleteView, name="user-delete"),
+
+    # Committee URLs
+    path("committee/add/", views.CommitteeAddView, name="committee-add"),
+    path("committee/<int:pk>/edit/", views.CommitteeEditView, name="committee-edit"),
+    path("committee/<int:pk>/delete/", views.CommitteeDeleteView, name="committee-delete"),
     
     # Registration List URLs
     path("registrationlist/add/", views.RegistrationListAddView, name="registrationlist-add"),

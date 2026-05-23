@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from .models import User, Committee
+from .fields import CommitteeRightsField
 
 
 class UserForm(forms.ModelForm):
@@ -37,19 +37,16 @@ class UserForm(forms.ModelForm):
         return user
 
 
-class UserCreationFormCustom(UserCreationForm):
-    committees = forms.ModelMultipleChoiceField(
-        queryset=Committee.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False
+class CommitteeForm(forms.ModelForm):
+    rights = forms.ChoiceField(
+        choices=CommitteeRightsField.CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=False,
     )
 
     class Meta:
-        model = User
-        fields = ['username', 'full_name', 'email', 'password1', 'password2', 'committees', 'is_admin']
+        model = Committee
+        fields = ['name', 'rights']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Full Name'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
-            'is_admin': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Committee Name'}),
         }

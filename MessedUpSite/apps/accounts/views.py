@@ -16,8 +16,8 @@ from MessedUpSite.apps.registrationlists.models import RegistrationList, Registr
 from MessedUpSite.apps.activities.forms import ActivityForm
 from MessedUpSite.apps.documents.forms import DocumentForm
 from MessedUpSite.apps.registrationlists.forms import RegistrationListForm, RegistrationResponseForm
-from .models import User
-from .forms import UserForm
+from .models import Committee, User
+from .forms import UserForm, CommitteeForm
 
 
 # ============================================================================
@@ -83,13 +83,14 @@ def AddContentView(request: HttpRequest):
     registration_lists = None
     registration_responses = None
     users = None
+    committees = None
 
     user_rights = request.user.committees.values_list("rights", flat=True)
-    
-    if len(user_rights) > 0:
+
+    if len(user_rights) > 0 or request.user.is_admin:
         # Check for Full admin rights
         
-        if "Full" in user_rights:
+        if "Full" in user_rights or request.user.is_admin:
             activities = Activity.objects.all().order_by("start_time").prefetch_related(
                 "registrationlists__questions"
             )
@@ -97,6 +98,7 @@ def AddContentView(request: HttpRequest):
             registration_lists = RegistrationList.objects.all().order_by("deadline")
             registration_responses = RegistrationResponses.objects.all().order_by("date_registered")
             users = User.objects.all().order_by("username")
+            committees = Committee.objects.all().order_by("name")
         else:
             # Handle committee-based permissions
             committee_access = []
@@ -132,6 +134,7 @@ def AddContentView(request: HttpRequest):
             "registration_lists": registration_lists,
             "registration_responses": registration_responses,
             "users": users,
+            "committees": committees,
         },
     )
 
@@ -146,7 +149,7 @@ def ActivityAddView(request: HttpRequest):
     """Create a new activity. Requires activity permissions."""
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to add activities.')
@@ -170,7 +173,7 @@ def ActivityEditView(request: HttpRequest, pk: int):
     
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to edit activities.')
@@ -194,7 +197,7 @@ def ActivityDeleteView(request: HttpRequest, pk: int):
     
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to delete activities.')
@@ -217,7 +220,7 @@ def DocumentAddView(request: HttpRequest):
     """Create a new document. Requires document permissions."""
     # Check if user has document permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_document_permission = "Full" in user_rights or any("Documents & Activities" in right for right in user_rights)
+    has_document_permission = "Full" in user_rights or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_document_permission:
         messages.error(request, 'You do not have permission to add documents.')
@@ -241,7 +244,7 @@ def DocumentEditView(request: HttpRequest, pk: int):
     
     # Check if user has document permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_document_permission = "Full" in user_rights or any("Documents & Activities" in right for right in user_rights)
+    has_document_permission = "Full" in user_rights or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_document_permission:
         messages.error(request, 'You do not have permission to edit documents.')
@@ -263,7 +266,7 @@ def DocumentDeleteView(request: HttpRequest, pk: int):
     """Delete a document. Requires document permissions."""
     document = get_object_or_404(Document, pk=pk)
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_document_permission = "Full" in user_rights or any("Documents & Activities" in right for right in user_rights)
+    has_document_permission = "Full" in user_rights or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_document_permission:
         messages.error(request, 'You do not have permission to delete documents.')
@@ -286,7 +289,7 @@ def UserAddView(request: HttpRequest):
     """Create a new user. Requires full admin permissions."""
     # Check if user has full admin permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_user_permission = "Full" in user_rights
+    has_user_permission = "Full" in user_rights or request.user.is_admin
     
     if not has_user_permission:
         messages.error(request, 'You do not have permission to add users.')
@@ -310,7 +313,7 @@ def UserEditView(request: HttpRequest, pk: int):
     
     # Check if user has full admin permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_user_permission = "Full" in user_rights
+    has_user_permission = "Full" in user_rights or request.user.is_admin
     
     if not has_user_permission:
         messages.error(request, 'You do not have permission to edit users.')
@@ -334,7 +337,7 @@ def UserDeleteView(request: HttpRequest, pk: int):
     
     # Check if user has full admin permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_user_permission = "Full" in user_rights
+    has_user_permission = "Full" in user_rights or request.user.is_admin
     
     if not has_user_permission:
         messages.error(request, 'You do not have permission to delete users.')
@@ -348,6 +351,77 @@ def UserDeleteView(request: HttpRequest, pk: int):
 
 
 # ============================================================================
+# Committee Management Views (Add, Edit, Delete)
+# ============================================================================
+
+
+@login_required(login_url="/accounts/login/")
+def CommitteeAddView(request: HttpRequest):
+    """Create a new committee. Requires full admin permissions."""
+    # Check if user has full admin permissions
+    user_rights = request.user.committees.values_list("rights", flat=True)
+    has_user_permission = "Full" in user_rights or request.user.is_admin
+    
+    if not has_user_permission:
+        messages.error(request, 'You do not have permission to add committees.')
+        return redirect('addcontent')
+    
+    if request.method == 'POST':
+        form = CommitteeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Committee added successfully!')
+            return redirect('addcontent')
+    else:
+        form = CommitteeForm()
+    return render(request, 'accounts/committee_form.html', {'form': form, 'action': 'Add'})
+
+
+@login_required(login_url="/accounts/login/")
+def CommitteeEditView(request: HttpRequest, pk: int):
+    """Edit an existing committee. Requires full admin permissions."""
+    committee = get_object_or_404(Committee, pk=pk)
+    
+    # Check if user has full admin permissions
+    user_rights = request.user.committees.values_list("rights", flat=True)
+    has_user_permission = "Full" in user_rights or request.user.is_admin
+    
+    if not has_user_permission:
+        messages.error(request, 'You do not have permission to edit committees.')
+        return redirect('addcontent')
+    
+    if request.method == 'POST':
+        form = CommitteeForm(request.POST, instance=committee)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Committee updated successfully!')
+            return redirect('addcontent')
+    else:
+        form = CommitteeForm(instance=committee)
+    return render(request, 'accounts/committee_form.html', {'form': form, 'action': 'Edit'})
+
+
+@login_required(login_url="/accounts/login/")
+def CommitteeDeleteView(request: HttpRequest, pk: int):
+    """Delete a user. Requires full admin permissions."""
+    committee = get_object_or_404(Committee, pk=pk)
+    
+    # Check if user has full admin permissions
+    user_rights = request.user.committees.values_list("rights", flat=True)
+    has_user_permission = "Full" in user_rights or request.user.is_admin
+    
+    if not has_user_permission:
+        messages.error(request, 'You do not have permission to delete committees.')
+        return redirect('addcontent')
+    
+    if request.method == 'POST':
+        committee.delete()
+        messages.success(request, 'Committee deleted successfully!')
+        return redirect('addcontent')
+    return render(request, 'accounts/confirm_delete.html', {'object': committee, 'object_type': 'Committee'})
+
+
+# ============================================================================
 # Registration List Views (Add, Edit, Delete)
 # ============================================================================
 
@@ -357,7 +431,7 @@ def RegistrationListAddView(request: HttpRequest):
     """Create a new registration list. Requires activity permissions."""
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to add registration lists.')
@@ -381,7 +455,7 @@ def RegistrationListEditView(request: HttpRequest, pk: int):
     
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to edit registration lists.')
@@ -405,7 +479,7 @@ def RegistrationListDeleteView(request: HttpRequest, pk: int):
     
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to delete registration lists.')
@@ -428,7 +502,7 @@ def RegistrationResponseAddView(request: HttpRequest):
     """Create a new registration response. Requires activity permissions."""
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to add registration responses.')
@@ -452,7 +526,7 @@ def RegistrationResponseEditView(request: HttpRequest, pk: int):
     
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to edit registration responses.')
@@ -476,7 +550,7 @@ def RegistrationResponseDeleteView(request: HttpRequest, pk: int):
     
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights)
+    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
     
     if not has_activity_permission:
         messages.error(request, 'You do not have permission to delete registration responses.')

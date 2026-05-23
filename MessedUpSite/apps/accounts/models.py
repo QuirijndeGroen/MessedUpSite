@@ -44,14 +44,14 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username:str, full_name:str, password:str|None=None):
+    def create_superuser(self, username:str, password:str|None=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
             username=username,
-            full_name=full_name,
+            full_name="admin",
             email="admin@messedup.utwente.nl",
             committees=None,
             password=password

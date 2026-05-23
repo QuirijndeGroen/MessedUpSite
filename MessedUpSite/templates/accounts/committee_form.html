@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ action }} User{% endblock %}
+{% block title %}{{ action }} Committee{% endblock %}
 
 {% load static %}
 {% block extra_head %}
@@ -10,15 +10,27 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>{{ action }} User</h2>
+    <h2>{{ action }} Committee</h2>
     <form method="post">
         {% csrf_token %}
         <table class="table">
             {% for field in form %}
                 <tr>
-                    <td>{{ field.label_tag }}</td>
                     <td>
-                        {{ field }}
+                        {% if field.widget.input_type == 'checkbox' %}
+                            {{ field }}
+                            {{ field.label_tag }}
+                        {% elif field.widget.input_type == 'checkboxselectmultiple' %}
+                            <td>{{ field.label_tag }}</td>
+                            <td>{{ field }}</td>
+                        {% else %}
+                            {{ field.label_tag }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if field.widget.input_type != 'checkbox' and field.widget.input_type != 'checkboxselectmultiple' %}
+                            {{ field }}
+                        {% endif %}
                         {% if field.help_text %}
                             <small class="form-text text-muted">{{ field.help_text }}</small>
                         {% endif %}
@@ -29,7 +41,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <button type="submit" class="btn btn-primary">{{ action }} User</button>
+        <button type="submit" class="btn btn-primary">{{ action }} Committee</button>
         <a href="{% url 'addcontent' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>

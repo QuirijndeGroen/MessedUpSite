@@ -10,8 +10,8 @@
 
 {% block content %}
 
-{% if activities %}
 <h2>Activities</h2>
+{% if activities %}
 <a href="{% url 'activity-add' %}" class="btn btn-primary mb-3">Add Activity</a>
 <table class="table">
   <thead>
@@ -50,10 +50,11 @@
 </table>
 
 {% else %}
+<a href="{% url 'activity-add' %}" class="btn btn-primary mb-3">Add Activity</a>
 {% endif %}
 
-{% if documents %}
 <h2>Documents</h2>
+{% if documents %}
 <a href="{% url 'document-add' %}" class="btn btn-primary mb-3">Add Document</a>
 <table class="table">
   <thead>
@@ -84,10 +85,11 @@
 </table>
 
 {% else %}
+<a href="{% url 'document-add' %}" class="btn btn-primary mb-3">Add Document</a>
 {% endif %}
 
-{% if users %}
 <h2>Users</h2>
+{% if users %}
 <a href="{% url 'user-add' %}" class="btn btn-primary mb-3">Add User</a>
 <table class="table">
   <thead>
@@ -122,10 +124,40 @@
 </table>
 
 {% else %}
+<a href="{% url 'user-add' %}" class="btn btn-primary mb-3">Add User</a>
 {% endif %}
 
-{% if registration_lists %}
+<h2>Committees</h2>
+{% if users %}
+<a href="{% url 'committee-add' %}" class="btn btn-primary mb-3">Add Committee</a>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Rights</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for committee in committees %}
+      <tr>
+          <td>{{ committee.name }}</td>
+          <td>{{ committee.rights }}</td>
+          <td>
+              <a href="{% url 'committee-edit' committee.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'committee-delete' committee.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+<a href="{% url 'committee-add' %}" class="btn btn-primary mb-3">Add Committee</a>
+{% endif %}
+
 <h2>Registration Lists</h2>
+{% if registration_lists %}
 <a href="{% url 'registrationlist-add' %}" class="btn btn-primary mb-3">Add Registration List</a>
 <table class="table">
   <thead>
@@ -154,10 +186,11 @@
 </table>
 
 {% else %}
+<a href="{% url 'registrationlist-add' %}" class="btn btn-primary mb-3">Add Registration List</a>
 {% endif %}
 
-{% if registration_responses %}
 <h2>Registration Responses</h2>
+{% if registration_responses %}
 <a href="{% url 'registrationresponse-add' %}" class="btn btn-primary mb-3">Add Registration Response</a>
 <table class="table">
   <thead>
@@ -184,6 +217,7 @@
 </table>
 
 {% else %}
+<a href="{% url 'registrationresponse-add' %}" class="btn btn-primary mb-3">Add Registration Response</a>
 {% endif %}
 
 {% endblock %}
