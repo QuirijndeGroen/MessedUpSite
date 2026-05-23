@@ -64,6 +64,14 @@ class RegistrationListForm(forms.ModelForm):
 
 
 class RegistrationResponseForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        registrationlist = kwargs.pop('registrationlist', None)
+        super().__init__(*args, **kwargs)
+        if registrationlist is not None:
+            self.fields['linked_registrationlist'].initial = registrationlist
+            self.fields['linked_registrationlist'].queryset = RegistrationList.objects.filter(pk=registrationlist.pk)
+            self.fields['linked_registrationlist'].widget = forms.HiddenInput()
+
     class Meta:
         model = RegistrationResponses
         fields = ['linked_registrationlist', 'user']

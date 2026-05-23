@@ -102,21 +102,22 @@ def view_responses(request: HttpRequest, pk: int):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
 
     can_add_responses = False
-    
-    committee = registrationlist.linked_activity.organizer
-    board = False
-    for committee in request.user.committees.values_list('name', flat=True):
-        if committee == 'Board':
-            board = True
-
     response_list = []
-    if committee in request.user.committees.values_list('name', flat=True) or request.user.is_admin or board:
 
+    try:
+        organizer = registrationlist.linked_activity.organizer
+    except AttributeError:
+        organizer = None
+
+    can_add_responses = (
+        request.user.is_admin
+        or request.user.committees.filter(name="Board").exists()
+        or (organizer is not None and organizer.id in request.user.committees.values_list('id', flat=True))
+    )
+
+    if can_add_responses:
         # Get all responses with their answers
         responses_table = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()
-
-        can_add_responses = True
-
     else:
         # Get the response from the user with their answers
         responses_table = registrationlist.responses.select_related('user').prefetch_related('answers__question').filter(user=request.user)
@@ -145,6 +146,7 @@ def view_responses(request: HttpRequest, pk: int):
             answers_list.append(user_answers.get(question.id, "-"))
         
         response_table.append({
+            'pk': response.pk,
             'user': response.user,
             'date_registered': response.date_registered,
             'answers': answers_list  # Now a list instead of dict

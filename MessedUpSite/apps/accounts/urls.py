@@ -37,7 +37,7 @@ urlpatterns = [
     path("registrationlist/<int:pk>/delete/", views.RegistrationListDeleteView, name="registrationlist-delete"),
     
     # Registration Response URLs
-    path("registrationresponse/add/", views.RegistrationResponseAddView, name="registrationresponse-add"),
+    path("registrationresponse/add/<int:registrationlist_pk>/", views.RegistrationResponseAddView, name="registrationresponse-add"),
     path("registrationresponse/<int:pk>/edit/", views.RegistrationResponseEditView, name="registrationresponse-edit"),
     path("registrationresponse/<int:pk>/delete/", views.RegistrationResponseDeleteView, name="registrationresponse-delete"),
     

@@ -12,16 +12,32 @@ from django.contrib import messages
 
 from MessedUpSite.apps.documents.models import Document
 from MessedUpSite.apps.activities.models import Activity
-from MessedUpSite.apps.registrationlists.models import RegistrationList, RegistrationResponses
+from MessedUpSite.apps.registrationlists.models import RegistrationAnswer, RegistrationList, RegistrationResponses
 from MessedUpSite.apps.activities.forms import ActivityForm
 from MessedUpSite.apps.documents.forms import DocumentForm
 from MessedUpSite.apps.registrationlists.forms import (
+    RegistrationForm,
     RegistrationListForm,
     RegistrationListQuestionFormSet,
     RegistrationResponseForm,
 )
 from .models import Committee, User
 from .forms import UserForm, CommitteeForm
+
+
+def _is_board_member(user):
+    return user.committees.filter(name="Board").exists()
+
+
+def _is_registrationlist_organizer(user, registrationlist):
+    organizer = getattr(registrationlist.linked_activity, "organizer", None)
+    if organizer is None:
+        return False
+    return organizer.id in user.committees.values_list("id", flat=True)
+
+
+def _can_manage_registration_responses(user, registrationlist):
+    return user.is_admin or _is_board_member(user) or _is_registrationlist_organizer(user, registrationlist)
 
 
 # ============================================================================
@@ -517,8 +533,10 @@ def RegistrationListDeleteView(request: HttpRequest, pk: int):
 
 
 @login_required(login_url="/accounts/login/")
-def RegistrationResponseAddView(request: HttpRequest):
-    """Create a new registration response. Requires activity permissions."""
+def RegistrationResponseAddView(request: HttpRequest, registrationlist_pk: int):
+    """Create a new registration response for a specific registration list."""
+    registrationlist = get_object_or_404(RegistrationList, pk=registrationlist_pk)
+
     # Check if user has activity permissions
     user_rights = request.user.committees.values_list("rights", flat=True)
     has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
@@ -527,56 +545,112 @@ def RegistrationResponseAddView(request: HttpRequest):
         messages.error(request, 'You do not have permission to add registration responses.')
         return redirect('addcontent')
     
+    questions = registrationlist.questions.all()
     if request.method == 'POST':
-        form = RegistrationResponseForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form = RegistrationResponseForm(request.POST, registrationlist=registrationlist)
+        question_form = RegistrationForm(request.POST, questions=questions)
+        if form.is_valid() and question_form.is_valid():
+            response = form.save(commit=False)
+            response.linked_registrationlist = registrationlist
+            response.save()
+
+            for question in questions:
+                field_name = f"question_{question.id}"
+                raw_answer = question_form.cleaned_data.get(field_name)
+
+                if raw_answer is None:
+                    answer_text = "-"
+                elif isinstance(raw_answer, bool):
+                    answer_text = str(raw_answer)
+                elif hasattr(raw_answer, "isoformat"):
+                    answer_text = raw_answer.isoformat()
+                else:
+                    answer_text = str(raw_answer)
+
+                RegistrationAnswer.objects.create(
+                    response=response,
+                    question=question,
+                    answer=answer_text,
+                )
+
             messages.success(request, 'Registration Response added successfully!')
-            return redirect('addcontent')
+            return redirect('registrationlists:view_responses', pk=registrationlist.pk)
     else:
-        form = RegistrationResponseForm()
-    return render(request, 'accounts/registrationresponse_form.html', {'form': form, 'action': 'Add'})
+        form = RegistrationResponseForm(registrationlist=registrationlist)
+        question_form = RegistrationForm(questions=questions)
+    return render(
+        request,
+        'accounts/registrationresponse_form.html',
+        {'form': form, 'question_form': question_form, 'action': 'Add'},
+    )
 
 
 @login_required(login_url="/accounts/login/")
 def RegistrationResponseEditView(request: HttpRequest, pk: int):
     """Edit an existing registration response. Requires activity permissions."""
     response = get_object_or_404(RegistrationResponses, pk=pk)
-    
-    # Check if user has activity permissions
-    user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
-    
-    if not has_activity_permission:
+    registrationlist = response.linked_registrationlist
+
+    if not _can_manage_registration_responses(request.user, registrationlist):
         messages.error(request, 'You do not have permission to edit registration responses.')
         return redirect('addcontent')
-    
+
+    questions = registrationlist.questions.all()
+    existing_answers = {answer.question_id: answer.answer for answer in response.answers.all()}
+
     if request.method == 'POST':
-        form = RegistrationResponseForm(request.POST, instance=response)
-        if form.is_valid():
-            form.save()
+        form = RegistrationResponseForm(request.POST, instance=response, registrationlist=registrationlist)
+        question_form = RegistrationForm(request.POST, questions=questions)
+        if form.is_valid() and question_form.is_valid():
+            response = form.save(commit=False)
+            response.linked_registrationlist = registrationlist
+            response.save()
+
+            response.answers.all().delete()
+            for question in questions:
+                field_name = f"question_{question.id}"
+                raw_answer = question_form.cleaned_data.get(field_name)
+
+                if raw_answer is None:
+                    answer_text = "-"
+                elif isinstance(raw_answer, bool):
+                    answer_text = str(raw_answer)
+                elif hasattr(raw_answer, "isoformat"):
+                    answer_text = raw_answer.isoformat()
+                else:
+                    answer_text = str(raw_answer)
+
+                RegistrationAnswer.objects.create(
+                    response=response,
+                    question=question,
+                    answer=answer_text,
+                )
+
             messages.success(request, 'Registration Response updated successfully!')
-            return redirect('addcontent')
+            return redirect('registrationlists:view_responses', pk=registrationlist.pk)
     else:
-        form = RegistrationResponseForm(instance=response)
-    return render(request, 'accounts/registrationresponse_form.html', {'form': form, 'action': 'Edit'})
+        form = RegistrationResponseForm(instance=response, registrationlist=registrationlist)
+        question_form = RegistrationForm(questions=questions, initial={f'question_{qid}': answer for qid, answer in existing_answers.items()})
+
+    return render(
+        request,
+        'accounts/registrationresponse_form.html',
+        {'form': form, 'question_form': question_form, 'action': 'Edit'},
+    )
 
 
 @login_required(login_url="/accounts/login/")
 def RegistrationResponseDeleteView(request: HttpRequest, pk: int):
     """Delete a registration response. Requires activity permissions."""
     response = get_object_or_404(RegistrationResponses, pk=pk)
-    
-    # Check if user has activity permissions
-    user_rights = request.user.committees.values_list("rights", flat=True)
-    has_activity_permission = "Full" in user_rights or any("Activity" in right for right in user_rights) or any("Documents & Activities" in right for right in user_rights) or request.user.is_admin
-    
-    if not has_activity_permission:
+    registrationlist = response.linked_registrationlist
+
+    if not _can_manage_registration_responses(request.user, registrationlist):
         messages.error(request, 'You do not have permission to delete registration responses.')
         return redirect('addcontent')
-    
+
     if request.method == 'POST':
         response.delete()
         messages.success(request, 'Registration Response deleted successfully!')
-        return redirect('addcontent')
+        return redirect('registrationlists:view_responses', pk=registrationlist.pk)
     return render(request, 'accounts/confirm_delete.html', {'object': response, 'object_type': 'Registration Response'})

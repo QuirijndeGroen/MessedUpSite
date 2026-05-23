@@ -13,8 +13,9 @@
     <h2>{{ action }} Registration Response</h2>
     <form method="post">
         {% csrf_token %}
+        {{ form.hidden_fields }}
         <table class="table">
-            {% for field in form %}
+            {% for field in form.visible_fields %}
                 <tr>
                     <td>
                         {{ field.label_tag }}
@@ -31,6 +32,29 @@
                 </tr>
             {% endfor %}
         </table>
+
+        {% if question_form %}
+            <h3>Questions</h3>
+            <table class="table">
+                {% for field in question_form %}
+                    <tr>
+                        <td>
+                            {{ field.label_tag }}
+                        </td>
+                        <td>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="alert alert-danger">{{ field.errors }}</div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
         <button type="submit" class="btn btn-primary">{{ action }} Registration Response</button>
         <a href="{% url 'addcontent' %}" class="btn btn-secondary">Cancel</a>
     </form>

@@ -26,6 +26,9 @@
               {% for question in questions %}
               <th>{{ question.question }}{% if question.mandatory %}*{% endif %}</th>
               {% endfor %}
+              {% if can_add_responses %}
+              <th>Actions</th>
+              {% endif %}
           </tr>
       </thead>
       <tbody>
@@ -41,6 +44,12 @@
               {% for answer in response.answers %}
               <td>{{ answer }}</td>
               {% endfor %}
+              {% if can_add_responses %}
+              <td>
+                <a href="{% url 'registrationresponse-edit' response.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'registrationresponse-delete' response.pk %}" class="btn btn-sm btn-danger">Delete</a>
+              </td>
+              {% endif %}
           </tr>
           {% endfor %}
       </tbody>
@@ -48,9 +57,9 @@
   <p><em>* Required questions</em></p>
 
   {% endif %}
-  
+
   {% if can_add_responses %}
-  <a href="{% url 'registrationresponse-add' %}">Add Registration Response</a>
+  <a href="{% url 'registrationresponse-add' registrationlist.pk %}">Add Registration Response</a>
   {% endif %}
 
   {% if response_list %}
