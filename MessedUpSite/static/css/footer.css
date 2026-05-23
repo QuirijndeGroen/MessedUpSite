@@ -56,18 +56,15 @@
 
 .fa-facebook {
     color: white;
-    background-color: #3B5998;
-    background: linear-gradient(45deg, hsl(221, 44%, 46%), #3B5998);
+    background: #3B5998 linear-gradient(45deg, hsl(221, 44%, 46%), #3B5998);
 }
 
 .fa-instagram {
     color: white;
-    background-color: #f40083;
-    background: linear-gradient(45deg, hsl(328, 100%, 53%), #f40083);
+    background: #f40083 linear-gradient(45deg, hsl(328, 100%, 53%), #f40083);
 }
 
 .fa-youtube {
     color: white;
-    background-color: #bb0000;
-    background: linear-gradient(45deg, hsl(0, 100%, 42%), #bb0000);
+    background: #bb0000 linear-gradient(45deg, hsl(0, 100%, 42%), #bb0000);
 }

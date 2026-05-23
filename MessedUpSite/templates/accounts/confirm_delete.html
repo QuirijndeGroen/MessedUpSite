@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "css/add_content.css" %}">
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Confirm Delete</h2>
+    <div class="alert alert-warning" role="alert">
+        Are you sure you want to delete this {{ object_type }}?
+        <br>
+        <strong>{{ object }}</strong>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'addcontent' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

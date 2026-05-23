@@ -15,10 +15,11 @@ def index(request: HttpRequest) -> HttpResponse:
             next_activity = next_public_activities[0]
         else:
             next_activity = next_activities[0] if len(next_activities) > 0 else None
-            
-        return render(request, "index.html", {"next_activity": next_activity})
+
     except Activity.DoesNotExist:
-        return render(request, "index.html", {"next_activity": None})
+        next_activity = None
+
+    return render(request, "index.html", {"next_activity": next_activity})
 
 
 def floorball(request: HttpRequest) -> HttpResponse:

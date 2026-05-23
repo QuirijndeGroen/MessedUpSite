@@ -101,14 +101,14 @@ def deregister(request: HttpRequest, pk: int):
 def view_responses(request: HttpRequest, pk: int):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
     
-    group = registrationlist.linked_activity.organizer
+    committee = registrationlist.linked_activity.organizer
     board = False
-    for group in request.user.groups.all():
-        if group.name == 'Board':
+    for committee in request.user.committees.values_list('name', flat=True):
+        if committee == 'Board':
             board = True
 
     response_list = []
-    if group in request.user.groups.all() or request.user.is_superuser or board:
+    if committee in request.user.committees.values_list('name', flat=True) or request.user.is_admin or board:
 
         # Get all responses with their answers
         responses_table = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()

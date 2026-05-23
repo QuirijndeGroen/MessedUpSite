@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Add Content{% endblock %}
+
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "css/add_content.css" %}">
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
+{% endblock %}
+
+{% block content %}
+
+{% if activities %}
+<h2>Activities</h2>
+<a href="{% url 'activity-add' %}" class="btn btn-primary mb-3">Add Activity</a>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Location</th>
+          <th>Organizer</th>
+          <th>Public</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for activity in activities %}
+      <tr>
+          <td>{{ activity.type }}</td>
+          <td><a href="{{ activity.image.url }}">preview image</a></td>
+          <td>{{ activity.title }}</td>
+          <td>{{ activity.description }}</td>
+          <td>{{ activity.start_time|date:"d/m/Y H:i" }}</td>
+          <td>{{ activity.end_time|date:"d/m/Y H:i" }}</td>
+          <td>{{ activity.location }}</td>
+          <td>{{ activity.organizer }}</td>
+          <td>{{ activity.public }}</td>
+          <td>
+              <a href="{% url 'activity-edit' activity.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'activity-delete' activity.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% if documents %}
+<h2>Documents</h2>
+<a href="{% url 'document-add' %}" class="btn btn-primary mb-3">Add Document</a>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Language</th>
+          <th>File</th>
+          <th>Priority</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for document in documents %}
+      <tr>
+          <td>{{ document.type }}</td>
+          <td>{{ document.title }}</td>
+          <td>{{ document.language }}</td>
+          <td><a href="{{ document.file.url }}">preview file</a></td>
+          <td>{{ document.priority }}</td>
+          <td>
+              <a href="{% url 'document-edit' document.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'document-delete' document.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% if users %}
+<h2>Users</h2>
+<a href="{% url 'user-add' %}" class="btn btn-primary mb-3">Add User</a>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Username</th>
+          <th>Full Name</th>
+          <th>Email Address</th>
+          <th>Committees</th>
+          <th>Admin</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for user in users %}
+      <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            {% for committee in user.committees.all %}
+            {{ committee}};
+            {% endfor %}
+          </td>
+          <td>{{ user.is_admin }}</td>
+          <td>
+              <a href="{% url 'user-edit' user.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'user-delete' user.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% if registration_lists %}
+<h2>Registration Lists</h2>
+<a href="{% url 'registrationlist-add' %}" class="btn btn-primary mb-3">Add Registration List</a>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Linked Activity</th>
+          <th>Description</th>
+          <th>Deadline</th>
+          <th>Registrations Public</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for reg_list in registration_lists %}
+      <tr>
+          <td>{{ reg_list.linked_activity }}</td>
+          <td>{{ reg_list.description }}</td>
+          <td>{{ reg_list.deadline|date:"d/m/Y H:i" }}</td>
+          <td>{{ reg_list.registrations_public }}</td>
+          <td>
+              <a href="{% url 'registrationlist-edit' reg_list.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'registrationlist-delete' reg_list.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% if registration_responses %}
+<h2>Registration Responses</h2>
+<a href="{% url 'registrationresponse-add' %}" class="btn btn-primary mb-3">Add Registration Response</a>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Registration List</th>
+          <th>User</th>
+          <th>Created</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for response in registration_responses %}
+      <tr>
+          <td>{{ response.linked_registrationlist }}</td>
+          <td>{{ response.user }}</td>
+          <td>{{ response.created|date:"d/m/Y H:i" }}</td>
+          <td>
+              <a href="{% url 'registrationresponse-edit' response.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'registrationresponse-delete' response.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+{% endif %}
+
+{% endblock %}

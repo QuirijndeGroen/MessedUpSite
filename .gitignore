@@ -199,3 +199,5 @@ pyrightconfig.json
 /MessedUpSite/static/activity_images/
 
 **/migrations/
+
+/.MessedUpSite/

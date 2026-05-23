@@ -60,6 +60,7 @@
           </p>
         </div>
       
+        {% if activity.registrationlists.all %}
         <div class="item-button">
           <div class="center-scale">
             <div class="scale button">
@@ -67,6 +68,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
       
         <span class="center item-image">
           <img src={{ activity.image.url }} alt="Activity Image">

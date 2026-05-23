@@ -17,7 +17,7 @@ create-superuser:
 	docker compose run --rm $(options) website uv run manage.py createsuperuser
 
 make-migrations:
-	docker compose run --rm $(options) website uv run manage.py makemigrations
+	docker compose run --rm $(options) website uv run manage.py makemigrations && docker compose run --rm $(options) website uv run manage.py migrate
 
 manage-py:
 	docker compose run --rm $(options) website uv run manage.py $(cmd)

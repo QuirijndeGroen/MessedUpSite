@@ -4,9 +4,15 @@
 {% block title %}{{ user.username }}{% endblock %} 
 {% block content %}
 
-<h1>Hi, {{user.get_full_name}}!</h1>
+<h1>Hi, {{ user.full_name }}!</h1>
 
-<h2>{{ profile.persona|default:"" }}</h2>
+<p style="margin-bottom: 0">Your active committees:</p>
+{% for committee in committees %}
+<h2 style="margin: 2pt">{{ committee|default:"" }}</h2>
+{% endfor %}
+
+<div class="sep-line" style="margin-top: 20pt"></div>
+
 <p>This is your profile page.</p>
 
 {% endblock %} 
