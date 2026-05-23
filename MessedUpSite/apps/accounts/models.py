@@ -72,6 +72,8 @@ class User(AbstractBaseUser):
         verbose_name="full name",
         max_length=255,
         unique=False,
+        blank=True,
+        default="",
     )
     email = models.EmailField(
         verbose_name="email address",
