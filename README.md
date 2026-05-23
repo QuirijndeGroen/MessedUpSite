@@ -26,6 +26,16 @@ So far, carousels have been used on the following pages:
 
   On the members  page there are two carousels used next to each other. One rotates through the upcoming activities and the other rotates through the upcoming tournaments.
 
+- Creation page
+
+  All important models can be created at:
+
+  ```browser
+  http://localhost:9000/acccounts/addcontent/
+  ```
+
+  This can only be done if the user is part of a committee with sufficient access to the site.
+
 #### Activities
 
 Activities are a model with a few fields that describe all important aspects of a activity. These field are:
