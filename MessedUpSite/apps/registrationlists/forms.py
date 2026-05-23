@@ -1,4 +1,5 @@
 from django import forms
+from .models import RegistrationList, RegistrationResponses
 
 class RegistrationForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -26,3 +27,25 @@ class RegistrationForm(forms.Form):
                 self.fields[field_name] = forms.IntegerField(label=label, required=required, widget=forms.NumberInput(attrs={'class': 'input-container awnser-field'}))
             elif question.type == "email":
                 self.fields[field_name] = forms.EmailField(label=label, required=required, widget=forms.EmailInput(attrs={'class': 'input-container awnser-field'}))
+
+
+class RegistrationListForm(forms.ModelForm):
+    class Meta:
+        model = RegistrationList
+        fields = ['linked_activity', 'description', 'deadline', 'registrations_public']
+        widgets = {
+            'linked_activity': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Description'}),
+            'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'registrations_public': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class RegistrationResponseForm(forms.ModelForm):
+    class Meta:
+        model = RegistrationResponses
+        fields = ['linked_registrationlist', 'user']
+        widgets = {
+            'linked_registrationlist': forms.Select(attrs={'class': 'form-control'}),
+            'user': forms.Select(attrs={'class': 'form-control'}),
+        }
