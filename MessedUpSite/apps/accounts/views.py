@@ -15,7 +15,11 @@ from MessedUpSite.apps.activities.models import Activity
 from MessedUpSite.apps.registrationlists.models import RegistrationList, RegistrationResponses
 from MessedUpSite.apps.activities.forms import ActivityForm
 from MessedUpSite.apps.documents.forms import DocumentForm
-from MessedUpSite.apps.registrationlists.forms import RegistrationListForm, RegistrationResponseForm
+from MessedUpSite.apps.registrationlists.forms import (
+    RegistrationListForm,
+    RegistrationListQuestionFormSet,
+    RegistrationResponseForm,
+)
 from .models import Committee, User
 from .forms import UserForm, CommitteeForm
 
@@ -78,12 +82,12 @@ def AddContentView(request: HttpRequest):
     - Full admin: all activities, documents, users, registration lists/responses
     - Committee-based: only content related to assigned committees
     """
-    activities = None
-    documents = None
-    registration_lists = None
-    registration_responses = None
-    users = None
-    committees = None
+    activities = "No access"
+    documents = "No access"
+    registration_lists = "No access"
+    registration_responses = "No access"
+    users = "No access"
+    committees = "No access"
 
     user_rights = request.user.committees.values_list("rights", flat=True)
 
@@ -134,7 +138,7 @@ def AddContentView(request: HttpRequest):
             "registration_lists": registration_lists,
             "registration_responses": registration_responses,
             "users": users,
-            "committees": committees,
+            "committees": committees,            
         },
     )
 
@@ -439,13 +443,21 @@ def RegistrationListAddView(request: HttpRequest):
     
     if request.method == 'POST':
         form = RegistrationListForm(request.POST)
-        if form.is_valid():
-            form.save()
+        question_formset = RegistrationListQuestionFormSet(request.POST)
+        if form.is_valid() and question_formset.is_valid():
+            registration_list = form.save()
+            question_formset.instance = registration_list
+            question_formset.save()
             messages.success(request, 'Registration List added successfully!')
             return redirect('addcontent')
     else:
         form = RegistrationListForm()
-    return render(request, 'accounts/registrationlist_form.html', {'form': form, 'action': 'Add'})
+        question_formset = RegistrationListQuestionFormSet()
+    return render(
+        request,
+        'accounts/registrationlist_form.html',
+        {'form': form, 'question_formset': question_formset, 'action': 'Add'},
+    )
 
 
 @login_required(login_url="/accounts/login/")
@@ -463,13 +475,20 @@ def RegistrationListEditView(request: HttpRequest, pk: int):
     
     if request.method == 'POST':
         form = RegistrationListForm(request.POST, instance=reg_list)
-        if form.is_valid():
+        question_formset = RegistrationListQuestionFormSet(request.POST, instance=reg_list)
+        if form.is_valid() and question_formset.is_valid():
             form.save()
+            question_formset.save()
             messages.success(request, 'Registration List updated successfully!')
             return redirect('addcontent')
     else:
         form = RegistrationListForm(instance=reg_list)
-    return render(request, 'accounts/registrationlist_form.html', {'form': form, 'action': 'Edit'})
+        question_formset = RegistrationListQuestionFormSet(instance=reg_list)
+    return render(
+        request,
+        'accounts/registrationlist_form.html',
+        {'form': form, 'question_formset': question_formset, 'action': 'Edit'},
+    )
 
 
 @login_required(login_url="/accounts/login/")

@@ -46,6 +46,11 @@
       </tbody>
   </table>
   <p><em>* Required questions</em></p>
+
+  {% endif %}
+  
+  {% if can_add_responses %}
+  <a href="{% url 'registrationresponse-add' %}">Add Registration Response</a>
   {% endif %}
 
   {% if response_list %}

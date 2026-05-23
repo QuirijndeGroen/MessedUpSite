@@ -1,5 +1,6 @@
 from django import forms
-from .models import RegistrationList, RegistrationResponses
+from django.forms import inlineformset_factory
+from .models import Question, RegistrationList, RegistrationResponses
 
 class RegistrationForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -27,6 +28,27 @@ class RegistrationForm(forms.Form):
                 self.fields[field_name] = forms.IntegerField(label=label, required=required, widget=forms.NumberInput(attrs={'class': 'input-container awnser-field'}))
             elif question.type == "email":
                 self.fields[field_name] = forms.EmailField(label=label, required=required, widget=forms.EmailInput(attrs={'class': 'input-container awnser-field'}))
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ["question", "type", "mandatory"]
+        widgets = {
+            "question": forms.TextInput(attrs={"class": "form-control"}),
+            "type": forms.Select(attrs={"class": "form-control"}),
+            "mandatory": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+        }
+
+
+RegistrationListQuestionFormSet = inlineformset_factory(
+    RegistrationList,
+    Question,
+    form=QuestionForm,
+    fields=("question", "type", "mandatory"),
+    extra=1,
+    can_delete=True,
+)
 
 
 class RegistrationListForm(forms.ModelForm):

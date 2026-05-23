@@ -10,9 +10,24 @@
 
 {% block content %}
 
-<h2>Activities</h2>
-{% if activities %}
+{% if activities != "No access" %}
 <a href="{% url 'activity-add' %}" class="btn btn-primary mb-3">Add Activity</a>
+{% endif %}
+{% if documents != "No access" %}
+<a href="{% url 'document-add' %}" class="btn btn-primary mb-3">Add Document</a>
+{% endif %}
+{% if users != "No access" %}
+<a href="{% url 'user-add' %}" class="btn btn-primary mb-3">Add User</a>
+{% endif %}
+{% if committees != "No access" %}
+<a href="{% url 'committee-add' %}" class="btn btn-primary mb-3">Add Committee</a>
+{% endif %}
+{% if registration_lists != "No access" %}
+<a href="{% url 'registrationlist-add' %}" class="btn btn-primary mb-3">Add Registration List</a>
+{% endif %}
+
+{% if activities and activities != "No access" %}
+<h2>Activities</h2>
 <table class="table">
   <thead>
       <tr>
@@ -48,14 +63,10 @@
       {% endfor %}
   </tbody>
 </table>
-
-{% else %}
-<a href="{% url 'activity-add' %}" class="btn btn-primary mb-3">Add Activity</a>
 {% endif %}
 
+{% if documents and documents != "No access" %}
 <h2>Documents</h2>
-{% if documents %}
-<a href="{% url 'document-add' %}" class="btn btn-primary mb-3">Add Document</a>
 <table class="table">
   <thead>
       <tr>
@@ -83,14 +94,11 @@
       {% endfor %}
   </tbody>
 </table>
-
-{% else %}
-<a href="{% url 'document-add' %}" class="btn btn-primary mb-3">Add Document</a>
 {% endif %}
 
+
+{% if users and users != "No access" %}
 <h2>Users</h2>
-{% if users %}
-<a href="{% url 'user-add' %}" class="btn btn-primary mb-3">Add User</a>
 <table class="table">
   <thead>
       <tr>
@@ -122,14 +130,11 @@
       {% endfor %}
   </tbody>
 </table>
-
-{% else %}
-<a href="{% url 'user-add' %}" class="btn btn-primary mb-3">Add User</a>
 {% endif %}
 
+
+{% if committees and committees != "No access" %}
 <h2>Committees</h2>
-{% if users %}
-<a href="{% url 'committee-add' %}" class="btn btn-primary mb-3">Add Committee</a>
 <table class="table">
   <thead>
       <tr>
@@ -151,14 +156,11 @@
       {% endfor %}
   </tbody>
 </table>
-
-{% else %}
-<a href="{% url 'committee-add' %}" class="btn btn-primary mb-3">Add Committee</a>
 {% endif %}
 
+
+{% if registration_lists and registration_lists != "No access" %}
 <h2>Registration Lists</h2>
-{% if registration_lists %}
-<a href="{% url 'registrationlist-add' %}" class="btn btn-primary mb-3">Add Registration List</a>
 <table class="table">
   <thead>
       <tr>
@@ -184,40 +186,6 @@
       {% endfor %}
   </tbody>
 </table>
-
-{% else %}
-<a href="{% url 'registrationlist-add' %}" class="btn btn-primary mb-3">Add Registration List</a>
-{% endif %}
-
-<h2>Registration Responses</h2>
-{% if registration_responses %}
-<a href="{% url 'registrationresponse-add' %}" class="btn btn-primary mb-3">Add Registration Response</a>
-<table class="table">
-  <thead>
-      <tr>
-          <th>Registration List</th>
-          <th>User</th>
-          <th>Created</th>
-          <th>Actions</th>
-      </tr>
-  </thead>
-  <tbody>
-      {% for response in registration_responses %}
-      <tr>
-          <td>{{ response.linked_registrationlist }}</td>
-          <td>{{ response.user }}</td>
-          <td>{{ response.created|date:"d/m/Y H:i" }}</td>
-          <td>
-              <a href="{% url 'registrationresponse-edit' response.id %}" class="btn btn-sm btn-warning">Edit</a>
-              <a href="{% url 'registrationresponse-delete' response.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
-          </td>
-      </tr>
-      {% endfor %}
-  </tbody>
-</table>
-
-{% else %}
-<a href="{% url 'registrationresponse-add' %}" class="btn btn-primary mb-3">Add Registration Response</a>
 {% endif %}
 
 {% endblock %}

@@ -31,8 +31,83 @@
                 </tr>
             {% endfor %}
         </table>
+
+        <h3>Custom Questions</h3>
+        <button type="button" id="add-question-btn" class="btn btn-secondary mb-3">Add question</button>
+        {{ question_formset.management_form }}
+        <table class="table" id="question-formset-table">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Type</th>
+                    <th>Mandatory</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="question-formset-body">
+                {% for formset_form in question_formset %}
+                    <tr class="question-form-row">
+                        {% for hidden in formset_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        <td style="width: 35%;">
+                            {{ formset_form.question }}
+                            {% if formset_form.question.errors %}
+                                <div class="alert alert-danger">{{ formset_form.question.errors }}</div>
+                            {% endif %}
+                        </td>
+                        <td style="width: 30%;">
+                            {{ formset_form.type }}
+                            {% if formset_form.type.errors %}
+                                <div class="alert alert-danger">{{ formset_form.type.errors }}</div>
+                            {% endif %}
+                        </td>
+                        <td style="width: 15%;">
+                            {{ formset_form.mandatory }}
+                            {% if formset_form.mandatory.errors %}
+                                <div class="alert alert-danger">{{ formset_form.mandatory.errors }}</div>
+                            {% endif %}
+                        </td>
+                        <td style="width: 20%;">
+                            <div style="display:none;">{{ formset_form.DELETE }}</div>
+                            <button type="button" class="btn btn-danger btn-sm question-delete-btn">Remove</button>
+                        </td>
+                    </tr>
+                    {% if formset_form.non_field_errors %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="alert alert-danger">{{ formset_form.non_field_errors }}</div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <template id="question-form-template">
+            <tr class="question-form-row">
+                {% for hidden in question_formset.empty_form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                <td style="width: 35%;">
+                    {{ question_formset.empty_form.question }}
+                </td>
+                <td style="width: 30%;">
+                    {{ question_formset.empty_form.type }}
+                </td>
+                <td style="width: 15%;">
+                    {{ question_formset.empty_form.mandatory }}
+                </td>
+                <td style="width: 20%;">
+                    <div style="display:none;">{{ question_formset.empty_form.DELETE }}</div>
+                    <button type="button" class="btn btn-danger btn-sm question-delete-btn">Remove</button>
+                </td>
+            </tr>
+        </template>
+
         <button type="submit" class="btn btn-primary">{{ action }} Registration List</button>
         <a href="{% url 'addcontent' %}" class="btn btn-secondary">Cancel</a>
     </form>
+    <script rel="text/javascript" src="{% static 'js/registrationlist_form.js' %}" defer></script>
 </div>
 {% endblock %}

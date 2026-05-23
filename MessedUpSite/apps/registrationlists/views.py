@@ -100,6 +100,8 @@ def deregister(request: HttpRequest, pk: int):
 @login_required(login_url="/accounts/login/")
 def view_responses(request: HttpRequest, pk: int):
     registrationlist = get_object_or_404(RegistrationList, pk=pk)
+
+    can_add_responses = False
     
     committee = registrationlist.linked_activity.organizer
     board = False
@@ -112,6 +114,8 @@ def view_responses(request: HttpRequest, pk: int):
 
         # Get all responses with their answers
         responses_table = registrationlist.responses.select_related('user').prefetch_related('answers__question').all()
+
+        can_add_responses = True
 
     else:
         # Get the response from the user with their answers
@@ -150,7 +154,8 @@ def view_responses(request: HttpRequest, pk: int):
         'registrationlist': registrationlist,
         'questions': questions,
         'response_table': response_table,
-        'response_list': response_list
+        'response_list': response_list,
+        'can_add_responses': can_add_responses,
     }
     
     return render(request, 'accounts/registration_responses.html', context)
