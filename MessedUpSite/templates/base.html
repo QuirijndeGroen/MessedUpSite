@@ -25,7 +25,9 @@
 
             {% endblock %}
 
+            {% if user.is_authenticated %} 
             {% include "quote.html" %}
+            {% endif %}
 
             {% include "footer.html" %}
         </div>

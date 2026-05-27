@@ -27,6 +27,7 @@ def newquote(request: HttpRequest):
     })
 
 
+@login_required(login_url="/accounts/login/")
 def quote_list(request: HttpRequest):
 
     quotes = Quote.objects.all().order_by("-created") 
