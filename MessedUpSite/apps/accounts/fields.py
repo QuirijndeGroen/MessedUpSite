@@ -5,7 +5,10 @@ class CommitteeRightsField(models.CharField):
     CHOICES = (
         ("Full", "Has full access to all documents and all activities"),
         ("Activity", "Can add and manage activities of the committee"),
-        ("Documents & Activities", "Can add documents and add or manage activities of the committee"),
+        (
+            "Documents & Activities",
+            "Can add documents and add or manage activities of the committee",
+        ),
     )
 
     def __init__(self, *args, **kwargs):

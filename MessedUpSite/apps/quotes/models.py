@@ -1,6 +1,7 @@
 from django.db import models
 from MessedUpSite.apps.accounts.models import User
 
+
 # Create your models here.
 class Quote(models.Model):
     """Represents an quote said by someone."""
@@ -12,4 +13,3 @@ class Quote(models.Model):
 
     def __str__(self):
         return f'"{self.text}" - {self.person}'
-    

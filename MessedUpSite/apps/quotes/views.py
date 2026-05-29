@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from .models import Quote
 from .forms import QuoteForm
 
+
 # Create your views here.
 @login_required(login_url="/accounts/login/")
 def newquote(request: HttpRequest):
@@ -22,16 +23,12 @@ def newquote(request: HttpRequest):
     else:
         form = QuoteForm()
 
-    return render(request, "accounts/newquote.html", {
-        "form": form
-    })
+    return render(request, "accounts/newquote.html", {"form": form})
 
 
 @login_required(login_url="/accounts/login/")
 def quote_list(request: HttpRequest):
 
-    quotes = Quote.objects.all().order_by("-created") 
+    quotes = Quote.objects.all().order_by("-created")
 
-    return render(request, "quotes.html", {
-        "quotes": quotes
-    })
+    return render(request, "quotes.html", {"quotes": quotes})

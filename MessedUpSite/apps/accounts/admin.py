@@ -16,7 +16,7 @@ class UserCreationForm(forms.ModelForm):
     fields, plus a repeated password."""
 
     formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+        models.ManyToManyField: {"widget": CheckboxSelectMultiple},
     }
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
@@ -62,11 +62,12 @@ class UserChangeForm(forms.ModelForm):
             "password",
             "committees",
             "is_active",
-            "is_admin"
+            "is_admin",
         ]
         widget = {
             "committees": forms.CheckboxSelectMultiple(),
         }
+
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -94,7 +95,14 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ["wide"],
-                "fields": ["username", "full_name", "email", "committees", "password1", "password2"],
+                "fields": [
+                    "username",
+                    "full_name",
+                    "email",
+                    "committees",
+                    "password1",
+                    "password2",
+                ],
             },
         ),
     ]

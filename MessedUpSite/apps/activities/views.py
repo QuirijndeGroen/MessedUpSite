@@ -15,13 +15,15 @@ def ActivitiesView(request: HttpRequest):
     activities = [activity for activity in activities if activity.is_active]
 
     # Get all registration responses for the current user
-    user_registrations = RegistrationResponses.objects.filter(user=request.user).values_list(
-        'linked_registrationlist_id', flat=True
-    )
+    user_registrations = RegistrationResponses.objects.filter(
+        user=request.user
+    ).values_list("linked_registrationlist_id", flat=True)
 
     for activity in activities:
         for registrationlist in activity.registrationlists.all():
-            registrationlist.form = RegistrationForm(questions=registrationlist.questions.all())
+            registrationlist.form = RegistrationForm(
+                questions=registrationlist.questions.all()
+            )
             registrationlist.user_registered = registrationlist.id in user_registrations
 
     return render(

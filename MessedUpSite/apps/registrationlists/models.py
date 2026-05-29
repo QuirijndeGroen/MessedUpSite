@@ -4,6 +4,7 @@ from MessedUpSite.apps.accounts.models import User
 from django.utils import timezone
 from datetime import date
 
+
 class RegistrationList(models.Model):
     """Represents an activity that users can participate in."""
 

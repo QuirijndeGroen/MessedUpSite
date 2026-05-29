@@ -27,7 +27,7 @@ class Activity(models.Model):
         blank=True,
         related_name="organizer",
     )
-    public=models.BooleanField(default=False)
+    public = models.BooleanField(default=False)
 
     @property
     def is_active(self):

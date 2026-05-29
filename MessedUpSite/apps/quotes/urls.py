@@ -9,4 +9,4 @@ urlpatterns = [
         views.quote_list,
         name="quote_list",
     ),
-] 
+]
